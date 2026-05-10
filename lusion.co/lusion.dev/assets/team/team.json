@@ -1,0 +1,9 @@
+[
+  {"id":"member-01","name":"The Bricks Team","role":"Creative Production House"},
+  {"id":"member-02","name":"Placeholder Team Member","role":"Strategy"},
+  {"id":"member-03","name":"Placeholder Team Member","role":"Creative"},
+  {"id":"member-04","name":"Placeholder Team Member","role":"Production"},
+  {"id":"member-05","name":"Placeholder Team Member","role":"Post-Production"},
+  {"id":"member-06","name":"Placeholder Team Member","role":"Project Management"},
+  {"id":"member-07","name":"Placeholder Team Member","role":"Operations"}
+]
