@@ -15,6 +15,16 @@ if (-not (Test-Path $sharedAssetsRoot)) {
   throw "Shared asset root not found: $sharedAssetsRoot"
 }
 
+function Get-NormalizedPath {
+  param([Parameter(Mandatory = $true)][string]$Path)
+
+  if (-not (Test-Path -LiteralPath $Path)) {
+    return $null
+  }
+
+  return (Resolve-Path -LiteralPath $Path).Path
+}
+
 function Ensure-Junction {
   param(
     [Parameter(Mandatory = $true)][string]$LinkPath,
@@ -27,7 +37,22 @@ function Ensure-Junction {
   }
 
   if (Test-Path $LinkPath) {
-    return
+    $item = Get-Item -LiteralPath $LinkPath -Force
+    if ($item.LinkType -ne "Junction") {
+      Write-Host "Existing path is not a junction, skipping: $LinkPath"
+      return
+    }
+
+    $currentTarget = $item.Target | Select-Object -First 1
+    $currentTargetResolved = if ($currentTarget) { Get-NormalizedPath -Path $currentTarget } else { $null }
+    $desiredTargetResolved = Get-NormalizedPath -Path $TargetPath
+
+    if ($currentTargetResolved -and $desiredTargetResolved -and ($currentTargetResolved -eq $desiredTargetResolved)) {
+      return
+    }
+
+    Write-Host "Relinking: $LinkPath -> $TargetPath"
+    Remove-Item -LiteralPath $LinkPath -Force
   }
 
   New-Item -ItemType Junction -Path $LinkPath -Target $TargetPath | Out-Null

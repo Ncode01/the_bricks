@@ -29675,16 +29675,18 @@ class Audios {
       properties.camera.add(this.listener));
   }
   addHoverClickEvents(e) {
-    SKIP_AUDIO || (this.addHoverEvent(e), this.addClickEvent(e));
+    SKIP_AUDIO || (e && this.addHoverEvent(e), e && this.addClickEvent(e));
   }
   addHoverEvent(e, t = "hover") {
     SKIP_AUDIO ||
+      !e ||
       e.addEventListener("mouseenter", () => {
         this.countPlay(t);
       });
   }
   addClickEvent(e, t = "click") {
     SKIP_AUDIO ||
+      !e ||
       input.onClicked.add(() => {
         input.hasThroughElem(e, t) && this.countPlay(t);
       });
@@ -36065,6 +36067,7 @@ class NewletterForm {
   domNewsletterForm;
   domNewsletterMessage;
   constructor(e, t, r) {
+    if (!e || !t || !r) return;
     (this.domNewsletterForm = e),
       (this.domNewsletterButton = t),
       (this.domNewsletterMessage = r),
@@ -38019,17 +38022,22 @@ class Header {
       (this.domMenuNewsletterMessage = document.getElementById(
         "header-menu-newsletter-feedback-message"
       )),
-      (this.formManager = new NewletterForm(
-        this.domMenuNewsletterForm,
-        this.domMenuNewsletterButton,
+      (this.formManager =
+        this.domMenuNewsletterForm &&
+        this.domMenuNewsletterButton &&
         this.domMenuNewsletterMessage
-      )),
+          ? new NewletterForm(
+              this.domMenuNewsletterForm,
+              this.domMenuNewsletterButton,
+              this.domMenuNewsletterMessage
+            )
+          : null),
       (this.containers = [
         document.getElementById("header-menu-links"),
         document.getElementById("header-menu-newsletter"),
         this.domMenuTalk,
         document.getElementById("header-menu-labs"),
-      ]),
+      ].filter(Boolean)),
       routeManager.onRouteChanged.add(this._onRouteChanged, this),
       pagesManager.onScrollTargetChanged.add(
         this._onPageScrollTargetChange,

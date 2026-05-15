@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80" fill="none">
+  <defs>
+    <style>
+      .the-bricks-text { font-family: 'Arial', sans-serif; font-weight: 900; font-size: 48px; fill: #9D4EDD; }
+    </style>
+  </defs>
+  
+  <!-- Brick design (left side) -->
+  <g id="brick-design">
+    <!-- Top brick with rounded corners -->
+    <rect x="15" y="12" width="55" height="18" rx="4" fill="#9D4EDD"/>
+    <!-- Left middle brick (lighter purple) -->
+    <rect x="15" y="35" width="25" height="18" rx="4" fill="#D8B4FF"/>
+    <!-- Right middle brick -->
+    <rect x="45" y="35" width="25" height="18" rx="4" fill="#9D4EDD"/>
+    <!-- Bottom brick -->
+    <rect x="15" y="58" width="55" height="18" rx="4" fill="#9D4EDD"/>
+    <!-- Vertical accent line -->
+    <line x1="10" y1="12" x2="10" y2="76" stroke="#5A189A" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Dot at top of line -->
+    <circle cx="10" cy="10" r="2.5" fill="#5A189A"/>
+  </g>
+  
+  <!-- Text "THE BRICKS" (right side) -->
+  <g id="text-design">
+    <text x="85" y="48" class="the-bricks-text">THE</text>
+    <text x="85" y="72" class="the-bricks-text" letter-spacing="-1">BRICKS</text>
+  </g>
+</svg>
