@@ -24736,7 +24736,263 @@ class Browser {
 }
 const browser$1 = new Browser();
 let CDN_PATH = "";
-window.location.hostname == "lusion.co" && (CDN_PATH = "https://lusion.dev");
+const _cdnHost = window.location.hostname;
+(_cdnHost == "lusion.co" ||
+  _cdnHost == "localhost" ||
+  _cdnHost == "127.0.0.1") &&
+  (CDN_PATH = "https://lusion.dev");
+const PROJECT_ASSET_ALIASES = {
+  brand_anthem_film: "oryzo_ai",
+  product_launch_campaign: "of_the_oak",
+  social_content_series: "devin_ai",
+  documentary_short: "porsche_dream_machine",
+  event_recap_film: "synthetic_human",
+  founder_story: "ddd_2024",
+  commercial_spot: "spaace",
+  recruitment_campaign: "choo_choo_world",
+  testimonial_series: "zero_tech",
+  product_demo_film: "spatial_fusion",
+  behind_the_scenes_content: "worldcoin",
+  case_study_film: "lusion_labs",
+  launch_teaser: "my_little_story_book",
+  culture_campaign: "soda_experience",
+  explainer_film: "infinite_passerella",
+  campaign_toolkit: "the_turn_of_the_screw",
+  brand_story_series: "maxmara_bearings_gifts",
+};
+function resolveProjectAssetId(o) {
+  return PROJECT_ASSET_ALIASES[o] || o;
+}
+const PROJECT_THUMB_URLS = {
+  brand_anthem_film:
+    "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+  product_launch_campaign:
+    "https://upload.wikimedia.org/wikipedia/en/a/a7/The_Matrix_Resurrections.jpg",
+  social_content_series:
+    "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
+  documentary_short:
+    "https://upload.wikimedia.org/wikipedia/en/9/9c/Blade_Runner_2049_poster.png",
+  event_recap_film:
+    "https://upload.wikimedia.org/wikipedia/en/8/80/Arrival%2C_Movie_Poster.jpg",
+  product_demo_film:
+    "https://upload.wikimedia.org/wikipedia/en/7/7f/Inception_ver3.jpg",
+  commercial_spot:
+    "https://upload.wikimedia.org/wikipedia/en/d/d0/Star_Wars_The_Force_Awakens_poster.jpg",
+  founder_story:
+    "https://upload.wikimedia.org/wikipedia/en/4/4c/Dune_2021.jpeg",
+  recruitment_campaign:
+    "https://upload.wikimedia.org/wikipedia/en/f/f9/Ex_Machina_poster.jpg",
+  culture_campaign:
+    "https://upload.wikimedia.org/wikipedia/en/1/1f/Ghost_in_the_Shell_2017_poster.png",
+  behind_the_scenes_content:
+    "https://upload.wikimedia.org/wikipedia/en/2/2e/E.T._the_Extra-Terrestrial_poster.jpg",
+  case_study_film:
+    "https://upload.wikimedia.org/wikipedia/en/3/3e/Avatar_The_Way_of_Water_poster.jpg",
+  launch_teaser:
+    "https://upload.wikimedia.org/wikipedia/en/5/52/Guardians_of_the_Galaxy_Vol_2_poster.jpg",
+  explainer_film:
+    "https://upload.wikimedia.org/wikipedia/en/1/1c/WALL-E_poster.jpg",
+  campaign_toolkit:
+    "https://upload.wikimedia.org/wikipedia/en/3/37/Ready_Player_One_%28film%29.png",
+  brand_story_series:
+    "https://upload.wikimedia.org/wikipedia/en/1/13/Tron_Legacy_poster.jpg",
+  oryzo_ai:
+    "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+  of_the_oak:
+    "https://upload.wikimedia.org/wikipedia/en/a/a7/The_Matrix_Resurrections.jpg",
+  devin_ai:
+    "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
+  porsche_dream_machine:
+    "https://upload.wikimedia.org/wikipedia/en/9/9c/Blade_Runner_2049_poster.png",
+  synthetic_human:
+    "https://upload.wikimedia.org/wikipedia/en/8/80/Arrival%2C_Movie_Poster.jpg",
+  spatial_fusion:
+    "https://upload.wikimedia.org/wikipedia/en/7/7f/Inception_ver3.jpg",
+  spaace:
+    "https://upload.wikimedia.org/wikipedia/en/d/d0/Star_Wars_The_Force_Awakens_poster.jpg",
+  ddd_2024:
+    "https://upload.wikimedia.org/wikipedia/en/4/4c/Dune_2021.jpeg",
+  choo_choo_world:
+    "https://upload.wikimedia.org/wikipedia/en/f/f9/Ex_Machina_poster.jpg",
+  soda_experience:
+    "https://upload.wikimedia.org/wikipedia/en/1/1f/Ghost_in_the_Shell_2017_poster.png",
+};
+function getProjectTextureUrl(o, e) {
+  const t = PROJECT_THUMB_URLS[o] || PROJECT_THUMB_URLS[resolveProjectAssetId(o)];
+  return (
+    t ||
+    settings.PROJECT_PATH +
+      resolveProjectAssetId(o) +
+      "/" +
+      (e === "depth" ? "home_depth.webp" : "home.webp")
+  );
+}
+const REEL_PREVIEW_POOL = {
+  desktop: [
+    "/assets/textures/reel/desktop.mp4",
+    "/assets/textures/reel/alt.mp4",
+  ],
+  mobile: [
+    "/assets/textures/reel/mobile.mp4",
+    "/assets/textures/reel/alt-mobile.mp4",
+  ],
+};
+const REEL_PREVIEW_PICK_IDX = Math.floor(
+  Math.random() * REEL_PREVIEW_POOL.desktop.length
+);
+const REEL_PREVIEW_FALLBACK = "/assets/textures/reel/desktop.mp4";
+const BRICKS_PRIMARY = "#A76EEE",
+  BRICKS_SECONDARY = "#CB94F7",
+  BRICKS_LIGHT = "#E2E1FC",
+  BRICKS_DARK = "#2a1f3d",
+  BRICKS_INK = "#0a0810";
+function getReelVideoSrc(o) {
+  const e = o ? REEL_PREVIEW_POOL.mobile : REEL_PREVIEW_POOL.desktop;
+  return e[REEL_PREVIEW_PICK_IDX % e.length] || REEL_PREVIEW_FALLBACK;
+}
+function bindReelPreviewVideo(o) {
+  o.addEventListener("error", () => {
+    o.src !== REEL_PREVIEW_FALLBACK &&
+      ((o.src = REEL_PREVIEW_FALLBACK), o.load(), o.play().catch(() => {}));
+  }),
+    o.addEventListener("loadeddata", () => {
+      o.paused && o.play().catch(() => {});
+    });
+}
+const REEL_OVERLAY_VIMEO_IDS = [
+  22439234, 64001760, 1084537, 357274789, 148751763,
+];
+const VIDEO_LIST = {
+  MAIN_VIDEO_REEL:
+    REEL_OVERLAY_VIMEO_IDS[
+      Math.floor(Math.random() * REEL_OVERLAY_VIMEO_IDS.length)
+    ],
+};
+const LOADER_DEBUG = (() => {
+  const TAG = "[BricksLoader]";
+  const enabled =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    new URLSearchParams(window.location.search).has("loaderDebug");
+  const pending = new Map();
+  const completed = [];
+  let batchId = 0;
+  let lastTarget = -1;
+  let lastTargetAt = performance.now();
+  const log = (...a) => enabled && console.log(TAG, ...a);
+  const warn = (...a) => enabled && console.warn(TAG, ...a);
+  const error = (...a) => enabled && console.error(TAG, ...a);
+  const trackStart = (url, type) => {
+    if (!enabled || !url) return;
+    pending.set(url, { url, type: type || "?", startedAt: performance.now() });
+    log("LOAD start", type || "?", url);
+  };
+  const trackDone = (url, ok, detail) => {
+    if (!enabled || !url) return;
+    const entry = pending.get(url);
+    const ms = entry ? Math.round(performance.now() - entry.startedAt) : null;
+    pending.delete(url);
+    completed.push({ url, ok, ms, detail });
+    (ok ? log : warn)(
+      "LOAD " + (ok ? "ok" : "fail"),
+      url,
+      ms != null ? ms + "ms" : "",
+      detail || ""
+    );
+  };
+  const dumpPending = (reason) => {
+    if (!enabled) return;
+    if (pending.size === 0) {
+      log("PENDING (" + reason + "): none");
+      return;
+    }
+    warn("PENDING (" + reason + "):", pending.size, "item(s)");
+    pending.forEach((v) =>
+      warn(
+        "  •",
+        v.type,
+        v.url,
+        "(" + Math.round(performance.now() - v.startedAt) + "ms waiting)"
+      )
+    );
+  };
+  const noteTarget = (target) => {
+    if (!enabled) return;
+    const t = target ?? 0;
+    if (Math.abs(t - lastTarget) > 0.002) {
+      lastTarget = t;
+      lastTargetAt = performance.now();
+    } else if (t < 0.995 && performance.now() - lastTargetAt > 3500) {
+      warn(
+        "STUCK: loader progress frozen at",
+        Math.round(t * 100) + "% for",
+        Math.round(performance.now() - lastTargetAt) + "ms"
+      );
+      dumpPending("frozen at " + Math.round(t * 100) + "%");
+      lastTargetAt = performance.now();
+    }
+  };
+  const logPreloader = (s) => {
+    if (!enabled) return;
+    noteTarget(s.percentTarget);
+    const now = performance.now();
+    const displayPct = Math.floor((s.display || 0) * 100);
+    if (displayPct !== s._lastLoggedPct || now - (s._lastLogAt || 0) > 2500) {
+      s._lastLoggedPct = displayPct;
+      s._lastLogAt = now;
+      log("PRELOADER UI ~" + displayPct + "%", {
+        percentTarget: Math.round((s.percentTarget || 0) * 100) + "%",
+        percent: Math.round((s.percent || 0) * 100) + "%",
+        percentToStart: Math.round((s.percentToStart || 0) * 100) + "%",
+        taskManager: Math.round((s.taskPercent || 0) * 100) + "%",
+        lineTransform: Math.round((s.lineTransform || 0) * 100) + "%",
+        hasInitialized: !!s.hasInitialized,
+        hasStarted: !!s.hasStarted,
+        pendingLoads: pending.size,
+      });
+    }
+  };
+  const beginBatch = (items) => {
+    if (!enabled) return;
+    batchId++;
+    log("BATCH #" + batchId + " — queueing", items.length, "asset(s)");
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
+      log("  queued:", it.type || it.constructor?.name || "?", it.url);
+    }
+  };
+  const endBatch = () => {
+    if (!enabled) return;
+    log("BATCH #" + batchId + " — all assets reported loaded");
+    dumpPending("after batch complete");
+  };
+  if (enabled) {
+    log("debug ON | CDN:", CDN_PATH || "(same-origin /assets)");
+    log("tip: add ?loaderDebug=1 on other hosts, or localStorage.bricksLoaderDebug='1'");
+    window.__bricksLoaderDebug = {
+      pending,
+      completed,
+      dumpPending,
+      completedCount: () => completed.length,
+    };
+    setInterval(() => {
+      if (pending.size > 0) dumpPending("heartbeat (every 10s)");
+    }, 1e4);
+  }
+  return {
+    enabled,
+    log,
+    warn,
+    error,
+    trackStart,
+    trackDone,
+    dumpPending,
+    logPreloader,
+    beginBatch,
+    endBatch,
+    noteTarget,
+  };
+})();
 window.location.hostname == "lusion.dev" &&
   (window.location.href =
     "https://lusion.co" + window.location.pathname + window.location.search);
@@ -25034,6 +25290,7 @@ function start$1(o) {
   if (e) {
     var t = this.itemList.splice(0, this.itemList.length),
       r;
+    LOADER_DEBUG.beginBatch(t);
     for (var n in this.itemUrls) delete this.itemUrls[n];
     for (var a = 0; a < e; a++) {
       r = t[a];
@@ -25049,7 +25306,10 @@ function start$1(o) {
 function loadNext() {
   if (this.queue.length && this.activeItems.length < this.maxActiveItems) {
     var o = this.queue.shift();
-    this.activeItems.push(o), this.loadNext(), o.load();
+    LOADER_DEBUG.trackStart(o.url, o.type),
+      this.activeItems.push(o),
+      this.loadNext(),
+      o.load();
   }
 }
 function _onLoading$1(o, e, t, r, n) {
@@ -25065,7 +25325,9 @@ function _getLoadedWeight(o) {
   return e;
 }
 function _onItemLoad(o, e, t) {
-  if (((this.loadedWeight = _getLoadedWeight(e)), !t)) {
+  o && o.url && LOADER_DEBUG.trackDone(o.url, !0),
+    (this.loadedWeight = _getLoadedWeight(e));
+  if (!t) {
     for (var r = this.activeItems, n = r.length; n--; )
       if (r[n] === o) {
         r.splice(n, 1);
@@ -25074,7 +25336,8 @@ function _onItemLoad(o, e, t) {
   }
   var a = this.loadingSignal;
   this.loadedWeight === this.totalWeight
-    ? ((this.isLoading = !1),
+    ? (LOADER_DEBUG.endBatch(),
+      (this.isLoading = !1),
       (this.loadedWeight = 0),
       (this.totalWeight = 0),
       (this.loadingSignal = new MinSignal$1()),
@@ -25302,9 +25565,15 @@ function _onXmlHttpProgress(o) {
   this.loadingSignal.dispatch(o.loaded / o.total);
 }
 function _onXmlHttpChange() {
-  this.xmlhttp.readyState === 4 &&
-    this.xmlhttp.status === 200 &&
-    this._onLoad(this.xmlhttp);
+  if (this.xmlhttp.readyState !== 4) return;
+  if (this.xmlhttp.status === 200) this._onLoad(this.xmlhttp);
+  else
+    LOADER_DEBUG.warn(
+      "XHR failed (loader may hang)",
+      this.url,
+      "status",
+      this.xmlhttp.status
+    );
 }
 function _onLoad$5() {
   this.content || (this.content = this.xmlhttp.response),
@@ -25512,10 +25781,20 @@ quickLoader$2.register(ImageItem$1);
 function load() {
   _super.load.apply(this, arguments);
   var o = this.content;
-  (o.onload = this.boundOnLoad), (o.src = this.url);
+  (o.onload = this.boundOnLoad),
+    (o.onerror = () => {
+      LOADER_DEBUG.trackDone(this.url, !1, "image onerror"),
+        delete o.onload,
+        delete o.onerror,
+        (this.width = 1),
+        (this.height = 1),
+        _super._onLoad.call(this);
+    }),
+    (o.src = this.url);
 }
 function _onLoad() {
   delete this.content.onload,
+    delete this.content.onerror,
     (this.width = this.content.width),
     (this.height = this.content.height),
     _super._onLoad.call(this);
@@ -27288,7 +27567,7 @@ class BlueNoise {
 const blueNoise = new BlueNoise(),
   COLORS$1 = settings.BALLOON_COLOR
     ? ["#" + settings.BALLOON_COLOR]
-    : ["#061dfb", "#ADFF00", "#f6000e", "#7e09f5", "#ffc000"],
+    : [BRICKS_PRIMARY, BRICKS_SECONDARY, BRICKS_LIGHT, "#ADFF00", "#ffc000"],
   colorIndex = Math.floor(Math.random() * COLORS$1.length),
   fancyColor = COLORS$1[colorIndex],
   _c$1 = new Color(fancyColor);
@@ -27773,7 +28052,7 @@ class HomeBalloonsBackground {
             {
               u_color0: { value: new Color("#141515") },
               u_color1: { value: new Color("#141515") },
-              u_colorPaint: { value: new Color("#1a2ffb") },
+              u_colorPaint: { value: new Color(BRICKS_PRIMARY) },
               u_aspect: { value: 1 },
               u_smooth: { value: new Vector2(0, 1) },
               u_clipScale: { value: this.clipScale },
@@ -30022,8 +30301,8 @@ varying vec3 v_color;varying vec2 v_uv;void main(){float d=length(v_uv-.5)*2.;gl
       scrollToRatioFactors: [0.4, 1.3],
       boxMin: new Vector3(-0.0112049, -0.0141946, 0),
       boxMax: new Vector3(1.01357, 0.718671, 0),
-      color0: "#5a90ff",
-      color1: "#2a38ee",
+      color0: BRICKS_SECONDARY,
+      color1: BRICKS_PRIMARY,
     },
     {
       fileName: "line_goal",
@@ -30032,8 +30311,8 @@ varying vec3 v_color;varying vec2 v_uv;void main(){float d=length(v_uv-.5)*2.;gl
       scrollToRatioFactors: [1.2, 2],
       boxMin: new Vector3(-0.0180006, -0.00963629, 0),
       boxMax: new Vector3(1.01777, 0.850395, 0),
-      color0: "#94fffb",
-      color1: "#1285dc",
+      color0: BRICKS_LIGHT,
+      color1: BRICKS_PRIMARY,
     },
     {
       fileName: "line_capability",
@@ -31588,7 +31867,6 @@ isServerRuntime ||
   initAppendVideoMetadata(),
   checkUrlTimeParam(),
   updateDRMEmbeds());
-const VIDEO_LIST = { MAIN_VIDEO_REEL: 761102167 };
 class VideoOverlay {
   domVideoContainer;
   domVideoCursor;
@@ -31949,12 +32227,10 @@ class HomeReelSection {
       (this.video.muted = !0),
       (this.video.playsinline = !0),
       this.video.setAttribute("playsinline", ""),
-      settings.LOCAL_TEXTURE_PATH !== settings.TEXTURE_PATH &&
-        (this.video.crossOrigin = "anonymous"),
-      (this.video.src =
-        settings.TEXTURE_PATH +
-        (this.isVerticalVideo ? "reel/mobile.mp4" : "reel/desktop.mp4")),
+      (this.video.src = getReelVideoSrc(this.isVerticalVideo)),
       (this.video.loop = !0),
+      (this.video.preload = "auto"),
+      bindReelPreviewVideo(this.video),
       this.video.load(),
       (this.videoTexture = new VideoTexture(this.video)),
       (this.ufxMeshThumb = new UfxMesh({ refDom: this.domThumb })),
@@ -31968,7 +32244,7 @@ class HomeReelSection {
             u_resolution: properties.sharedUniforms.u_resolution,
             u_texture: { value: this.videoTexture },
             u_radialCenter: { value: this.ufxMeshRadialCenter },
-            u_color: { value: new Color(1716219) },
+            u_color: { value: new Color(BRICKS_DARK) },
             u_showRatio: { value: 0 },
             u_aspectScale: { value: 1 },
             u_time: properties.sharedUniforms.u_time,
@@ -32066,9 +32342,7 @@ class HomeReelSection {
         this.domVideoContainerDecorationTop._svgWrapper.getBoundingClientRect().width),
       this.isVerticalVideo !== r &&
         ((this.isVerticalVideo = r),
-        (this.video.src =
-          settings.TEXTURE_PATH +
-          (this.isVerticalVideo ? "reel/mobile.mp4" : "reel/desktop.mp4")));
+        (this.video.src = getReelVideoSrc(this.isVerticalVideo)));
   }
   update(e) {
     let t = scrollManager.getDomRange(this.domContainer),
@@ -32647,14 +32921,16 @@ class ProjectItem {
       (this.domFooterLine2Time = 0),
       (this.domFooterLine2HoverRatio = 0);
     let a = settings.USE_WEBGL2 ? LinearMipmapLinearFilter : LinearFilter,
-      l = properties.loader.load(
-        settings.PROJECT_PATH + this.id + "/home.webp",
-        { type: "texture", minFilter: a }
-      ).content,
-      c = properties.loader.load(
-        settings.PROJECT_PATH + this.id + "/home_depth.webp",
-        { type: "texture", minFilter: LinearFilter }
-      ).content;
+      l = properties.loader.load(getProjectTextureUrl(this.id, "color"), {
+        type: "texture",
+        minFilter: a,
+        crossOrigin: "anonymous",
+      }).content,
+      c = properties.loader.load(getProjectTextureUrl(this.id, "depth"), {
+        type: "texture",
+        minFilter: LinearFilter,
+        crossOrigin: "anonymous",
+      }).content;
     (this.focusPosMotion = new SecondOrderDynamics(new Vector3(), 1, 0.6, 2)),
       (this.focusPos = this.focusPosMotion.value),
       (this.shiftXYTarget = new Vector2()),
@@ -33503,8 +33779,8 @@ class GoalTunnelEfx extends PostEffect {
 const goalTunnelEfx = new GoalTunnelEfx(),
   _c1$3 = new Color(),
   _c2$2 = new Color(),
-  COLOR_1 = ["#0d2b27", "#ba0000", "#00b5a6", "#0099ff"],
-  COLOR_2 = ["#8c8c8c", "#008e6b", "#7e7f05", "#ff0000"];
+  COLOR_1 = [BRICKS_DARK, BRICKS_PRIMARY, BRICKS_SECONDARY, BRICKS_LIGHT],
+  COLOR_2 = ["#5c4580", BRICKS_PRIMARY, BRICKS_DARK, BRICKS_SECONDARY];
 class GoalBlackTunnel {
   container = new Object3D();
   GRID_SIZE = 20;
@@ -34649,7 +34925,7 @@ class GoalTunnelAstronauts {
     u_frameOutRatio: { value: 0 },
     u_whiteTunnelRatio: { value: 0 },
     u_faceLedLight: { value: 0 },
-    u_faceLedColor: { value: new Color("#aaaafb") },
+    u_faceLedColor: { value: new Color(BRICKS_SECONDARY) },
     u_tintColor: { value: new Color() },
     u_cardPosition: { value: new Vector3() },
     u_sunPosition: { value: new Vector3(-20, 0, 22) },
@@ -34937,7 +35213,7 @@ class GoalTunnelAstronauts {
             {
               u_cardLedTexture: { value: this.textures.led },
               u_cardTexture: { value: this.textures.card },
-              u_cardColor: { value: new Color("#ddddff") },
+              u_cardColor: { value: new Color(BRICKS_LIGHT) },
               u_cardUvOffset: { value: new Vector2(0, 0) },
               u_cardTextureSize: { value: this.cardTextureSize },
               u_cardOpacity: { value: 1 },
@@ -35367,7 +35643,7 @@ class GoalTunnelAstronauts {
       (this.whiteTunnelUniforms.u_frameOutRatio.value = r),
       (this.whiteTunnelUniforms.u_whiteTunnelRatio.value = n),
       this.whiteTunnelUniforms.u_tintColor.value
-        .setStyle("#2533c2")
+        .setStyle(BRICKS_PRIMARY)
         .multiplyScalar(math.fit(p, 1, 0, 0.2, 1) * (r > 0 ? 1 : 0)),
       (this.cloneUniforms.u_alpha.value = this.clonesShowRatio),
       this.updateTransforms(e),
@@ -36114,36 +36390,26 @@ class NewletterForm {
   }
   _onFormSubmit(e) {
     if ((e.preventDefault(), this.isSendingTheNewletterRequest)) return;
-    this.domNewsletterMessage.classList.remove("error"),
-      (this.domNewsletterMessage.innerHTML = "");
     const t = e.target,
       n = new FormData(t).get("EMAIL");
-    if (!validateEmail(n)) {
+    if (
+      (this.domNewsletterMessage.classList.remove("error"),
+      !validateEmail(n))
+    ) {
       this.domNewsletterMessage.classList.add("error"),
         (this.domNewsletterMessage.innerHTML = "The email is not valid!");
       return;
     }
     (this.isSendingTheNewletterRequest = !0),
-      (this.domNewsletterButton.disabled = !0);
-    const a = getAjaxUrl(MAILCHIMP_URL) + "&" + toQueryString({ EMAIL: n });
-    jsonp$1(a, { param: "c" }, (l, c) => {
-      l
-        ? (this.domNewsletterMessage.classList.add("error"),
-          (this.domNewsletterMessage.innerHTML =
-            "Something went wrong, try again"))
-        : c.result !== "success"
-        ? (this.domNewsletterMessage.classList.add("error"),
-          (this.domNewsletterMessage.innerHTML =
-            "Something went wrong, try again"))
-        : ((this.domNewsletterMessage.innerHTML =
-            "Almost there! Check your email box!"),
-          t.reset(),
-          setTimeout(() => {
-            this.domNewsletterMessage.innerHTML = "";
-          }, 3e3)),
-        (this.isSendingTheNewletterRequest = !1),
-        (this.domNewsletterButton.disabled = !1);
-    });
+      (this.domNewsletterButton.disabled = !0),
+      (this.domNewsletterMessage.innerHTML =
+        "Thanks — sign-up is disabled on this demo."),
+      t.reset(),
+      setTimeout(() => {
+        (this.domNewsletterMessage.innerHTML = ""),
+          (this.isSendingTheNewletterRequest = !1),
+          (this.domNewsletterButton.disabled = !1);
+      }, 2500);
   }
 }
 class FooterSection {
@@ -36597,7 +36863,7 @@ class GoalTunnelsBackground {
         uniforms: Object.assign(
           {
             u_bgColor: { value: new Color() },
-            u_atmosphereColor: { value: new Color("#4169E1") },
+            u_atmosphereColor: { value: new Color(BRICKS_PRIMARY) },
             u_earthTexture: { value: this.earthTexture },
           },
           blueNoise.sharedUniforms
@@ -36697,7 +36963,7 @@ class GoalWhiteTunnelParticles {
         uniforms: {
           u_time: properties.sharedUniforms.u_time,
           u_activeRatio: { value: 0 },
-          u_color: { value: new Color("#689aff") },
+          u_color: { value: new Color(BRICKS_SECONDARY) },
           u_planes: { value: c },
           u_bgColor: { value: new Color() },
           u_aspect: properties.sharedUniforms.u_aspect,
@@ -37612,7 +37878,7 @@ class ProjectDetailsScreen {
   shadow = 1;
   previewBgThreshold = 1;
   previewColorRatio = 0;
-  previewBgColorDefaultColorHex = "#F3F4F9";
+  previewBgColorDefaultColorHex = BRICKS_LIGHT;
   previewBgColorHex = "#000";
   sharedUniforms = {
     u_shadowTexture: { value: null },
@@ -38224,7 +38490,7 @@ class Header {
       t < 1 &&
         (n.beginPath(),
         n.arc(0, 0, r / 2, 0, Math.PI * 2),
-        _c1$1.setStyle("#E4E6EF"),
+        _c1$1.setStyle("#d4d3ee"),
         _c2$1.setStyle("#fff"),
         (n.fillStyle = _c1$1
           .lerp(_c2$1, Math.max(this.menu.ratio, +this.forceWhite))
@@ -41073,12 +41339,12 @@ class AboutHeroFaces {
 const aboutHeroFaces = new AboutHeroFaces(),
   fragmentShader$1 = `#define GLSLIFY 1
 uniform sampler2D u_texture;uniform vec3 u_colorBurn;uniform float u_colorBurnAlpha;uniform vec3 u_colorDodge;uniform float u_colorDodgeAlpha;varying vec2 v_uv;vec3 colorDodge(in vec3 src,in vec3 dst){return mix(step(0.,src)*(min(vec3(1.),dst/(1.-src))),vec3(1.),step(1.,dst));}vec3 colorBurn(in vec3 src,in vec3 dst){return mix(step(0.,src)*(1.-min(vec3(1.),(1.-dst)/src)),vec3(1.),step(1.,dst));}void main(){vec4 texture=texture2D(u_texture,v_uv);vec3 colorBurn=mix(texture.rgb,colorBurn(u_colorBurn,texture.rgb),u_colorBurnAlpha);vec3 colorDodge=mix(texture.rgb,colorDodge(u_colorDodge,texture.rgb),u_colorDodgeAlpha);texture.rgb=mix(colorBurn,colorDodge,texture.rgb);gl_FragColor=texture;}`;
-let _sceneColorBurn = new Color("#00f0ff"),
-  _sceneColorDodge = new Color("#005aff"),
+let _sceneColorBurn = new Color(BRICKS_SECONDARY),
+  _sceneColorDodge = new Color(BRICKS_PRIMARY),
   _sceneColorBurnAlpha = 0.15,
   _sceneColorDodgeAlpha = 0.12,
-  _hudColorBurn = new Color("#79a8ff"),
-  _hudColorDodge = new Color("#a5ff44"),
+  _hudColorBurn = new Color(BRICKS_SECONDARY),
+  _hudColorDodge = new Color(BRICKS_LIGHT),
   _hudColorBurnAlpha = 1,
   _hudColorDodgeAlpha = 0.7;
 class AboutPageHeroEfx extends PostEffect {
@@ -41575,7 +41841,7 @@ class WhoSubsectionWeAre {
     (this.domContainer = e.querySelector("#about-who-subsection-we-are")),
       (this.domScroll = e.querySelector("#about-who-title-main-scroll")),
       (this.domLeftTexts = e.querySelectorAll(
-        "#about-who-title-left-1, #about-who-title-left-2 svg, #about-who-title-left-3, #about-who-title-left-4 span"
+        "#about-who-title-left-1, #about-who-title-left-2 .bricks-wordmark--inline, #about-who-title-left-3, #about-who-title-left-4 span"
       )),
       (this.domRightTexts = e.querySelectorAll(".about-who-title-right-text")),
       aboutWhoLogo.preInit(e);
@@ -41593,7 +41859,7 @@ class WhoSubsectionWeAre {
     if (
       ((this.domContainer.style.visibility = t ? "visible" : "hidden"),
       (this.domContainer.style.opacity = t ? 1 : 0),
-      (aboutWhoLogo.container.visible = t),
+      (aboutWhoLogo.container.visible = !1),
       t)
     ) {
       let l = properties.useMobileLayout ? properties.viewportWidth * -r : 0;
@@ -41610,14 +41876,10 @@ class WhoSubsectionWeAre {
           T = math.fit(this.logoHideRatio, _ * 0.2, _ * 0.2 + 0.8, 0, 1),
           M = math.fit(r, 0, _ * 0.5 + 0.3, 0, -10, ease.cubicOut);
         (g._pageScrollOffsetXRatio = M),
-          properties.useMobileLayout || p != 1
-            ? ((T = math.fit(T, 0.35, 1, 0, 1, ease.cubicOut)),
-              (g.style.opacity = T),
-              (g.style.transform =
-                "translate3d(" + ((1 - T) * 1 + M) * u + "px, 0, 0)"),
-              p == 1 && (aboutWhoLogo.hideRatio = this.logoHideRatio))
-            : ((aboutWhoLogo.hideRatio = T),
-              (aboutWhoLogo._pageScrollOffsetXRatio = M));
+          ((T = math.fit(T, 0.35, 1, 0, 1, ease.cubicOut)),
+            (g.style.opacity = T),
+            (g.style.transform =
+              "translate3d(" + ((1 - T) * 1 + M) * u + "px, 0, 0)"));
       }
       for (let p = 0; p < this.domRightTexts.length; p++) {
         let g = this.domRightTexts[p],
@@ -50013,10 +50275,25 @@ class TextureItem extends ImageItem {
   load() {
     this.isStartLoaded = !0;
     let e = this.content.image;
-    (e.onload = this.boundOnLoad), (e.src = this.url);
+    (e.onload = this.boundOnLoad),
+      (e.onerror = () => {
+        LOADER_DEBUG.trackDone(this.url, !1, "image onerror"),
+          delete e.onload,
+          delete e.onerror,
+          (this.width = 1),
+          (this.height = 1),
+          this.content.size.set(1, 1),
+          (this.content.needsUpdate = !0),
+          taskManager.add(this.content),
+          this.onPost
+            ? this.onPost.call(this, this.content, this.onPostLoadingSignal)
+            : this._onLoadComplete();
+      }),
+      (e.src = this.url);
   }
   _onLoad() {
     delete this.content.image.onload,
+      delete this.content.image.onerror,
       (this.width = this.content.image.width),
       (this.height = this.content.image.height),
       this.content.size.set(this.width, this.height),
@@ -50339,11 +50616,13 @@ class Preloader {
   }
   init() {}
   show(e, t) {
-    (this._initCallback = e),
+    LOADER_DEBUG.log("PRELOADER show — starting main asset batch"),
+      (this._initCallback = e),
       (this._startCallback = t),
       (this.isActive = !0),
       properties.loader.start((r) => {
-        this.percentTarget = r;
+        (this.percentTarget = r),
+          LOADER_DEBUG.noteTarget(r);
       });
   }
   hide() {}
@@ -50362,10 +50641,15 @@ class Preloader {
           : 0) /
           this.MIN_PRELOAD_DURATION
     )),
-      this.percentTarget == 1 &&
+      this.percentTarget >= 0.999 &&
         (properties.hasInitialized || this._initCallback(),
         (this.percentToStart = settings.SKIP_ANIMATION
           ? 1
+          : taskManager.percent >= 1
+          ? Math.min(
+              1,
+              this.percentToStart + e / this.MIN_DURATION_BETWEEN_INIT_AND_START
+            )
           : Math.min(
               taskManager.percent,
               this.percentToStart + e / this.MIN_DURATION_BETWEEN_INIT_AND_START
@@ -50374,7 +50658,7 @@ class Preloader {
         this.percentToStart * this.PERCENT_BETWEEN_INIT_AND_START +
         this.percent * (1 - this.PERCENT_BETWEEN_INIT_AND_START),
       r = 0;
-    t == 1 &&
+    t >= 0.999 &&
       ((this.lineTransformTime += settings.SKIP_ANIMATION ? 1 : e),
       (r = ease.expoInOut(math.saturate(this.lineTransformTime)))),
       r == 1 && !properties.hasStarted && this._startCallback();
@@ -50406,8 +50690,20 @@ class Preloader {
     (transitionOverlay.loadBarRatio = t),
       (transitionOverlay.lineTransformRatio = r),
       (transitionOverlay.contentShowRatio = n),
+      LOADER_DEBUG.logPreloader({
+        display: t,
+        percentTarget: this.percentTarget,
+        percent: this.percent,
+        percentToStart: this.percentToStart,
+        taskPercent: taskManager.percent,
+        lineTransform: r,
+        hasInitialized: properties.hasInitialized,
+        hasStarted: properties.hasStarted,
+      }),
       n == 1 &&
-        ((this.domContainer.style.display = "none"), (this.isActive = !1));
+        (LOADER_DEBUG.log("PRELOADER hidden — site started"),
+        (this.domContainer.style.display = "none"),
+        (this.isActive = !1));
   }
 }
 const preloader = new Preloader();
@@ -50556,6 +50852,8 @@ class FontItem extends AnyItem {
       (FontItem.dom = e);
   }
   _loadFunc(e, t, r) {
+    LOADER_DEBUG.trackStart(e, "font"),
+      LOADER_DEBUG.log("FONT batch start:", e);
     let n = e.split(","),
       a = [];
     for (let g = 0; g < n.length; g++) a.push(n[g].trim());
@@ -50564,18 +50862,29 @@ class FontItem extends AnyItem {
       c = n[1] || "normal",
       u = n[2] || "normal",
       f,
-      p = a.length;
+      p = a.length,
+      g = 0;
     f = setInterval(() => {
       (n = a[0].split(":")),
         (l = n[0]),
         (c = n[1] || "normal"),
         (u = n[2] || "normal");
-      let g = this._getTextWidth(l, c, u, this.refFont),
-        v = this._getTextWidth(this.refFont, c, u, this.refFont);
-      g !== v &&
-        (a.shift(),
-        r.dispatch((p - a.length) / p),
-        a.length === 0 && (clearInterval(f), t()));
+      let v = this._getTextWidth(l, c, u, this.refFont),
+        _ = this._getTextWidth(this.refFont, c, u, this.refFont);
+      if (
+        (g++,
+        v !== _ &&
+          (a.shift(), r.dispatch((p - a.length) / p)),
+        a.length === 0 || g > 150)
+      ) {
+        g > 150 && a.length > 0
+          ? LOADER_DEBUG.warn("FONT timeout — forcing complete, remaining:", a.join(", "))
+          : LOADER_DEBUG.log("FONT batch ok:", e),
+          LOADER_DEBUG.trackDone(e, a.length === 0, g > 150 ? "timeout" : "ok"),
+          clearInterval(f),
+          r.dispatch(1),
+          t();
+      }
     }, this.interval);
   }
   _getTextWidth = (e, t, r, n) => {
@@ -50600,23 +50909,26 @@ FontItem.extensions = [];
 let dateTime = performance.now(),
   _needsResize = !1;
 function preRun() {
+  LOADER_DEBUG.log("preRun — phase 1 fonts");
   for (const [o, e] of Object.entries(settings.CROSS_ORIGINS))
     properties.loader.setCrossOrigin(o, e);
   routeManager.init(),
     properties.loader.register(FontItem),
-    properties.loader.add("Aeonik:400", { type: "font" }),
+    properties.loader.add("Sora:400", { type: "font" }),
     properties.loader.start((o) => {
-      o === 1 && run();
+      LOADER_DEBUG.noteTarget(o),
+        o === 1 && (LOADER_DEBUG.log("preRun complete — calling run()"), run());
     });
 }
 function run() {
+  LOADER_DEBUG.log("run — init engine + phase 2 fonts/assets");
   let o = (properties.viewportWidth = window.innerWidth),
     e = (properties.viewportHeight = window.innerHeight);
   (properties.viewportResolution = new Vector2(o, e)),
     (properties.width = o),
     (properties.height = e),
     properties.loader.add(
-      "Aeonik:500,Aeonik:400:italic,IBMPlexMono:400,IBMPlexMono:500,LusionMono:400",
+      "Sora:500,Sora:400:italic,Inter:400,Inter:500,Inter:400",
       { type: "font" }
     ),
     app.initEngine(),
@@ -50631,13 +50943,17 @@ function run() {
     ui.preload(init, start);
 }
 function init() {
+  LOADER_DEBUG.log("init — pages + webgl");
   input.init(),
     pagesManager.init(),
     ui.init(),
     app.init(),
-    (properties.hasInitialized = !0);
+    (properties.hasInitialized = !0),
+    (window.properties = properties),
+    LOADER_DEBUG.log("init done — hasInitialized=true");
 }
 function start() {
+  LOADER_DEBUG.log("start — revealing UI");
   ui.start(),
     pagesManager.start(),
     app.start(),

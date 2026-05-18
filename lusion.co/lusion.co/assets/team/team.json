@@ -1,9 +1,32 @@
 [
-  {"id":"member-01","name":"The Bricks Team","role":"Creative Production House"},
-  {"id":"member-02","name":"Placeholder Team Member","role":"Strategy"},
-  {"id":"member-03","name":"Placeholder Team Member","role":"Creative"},
-  {"id":"member-04","name":"Placeholder Team Member","role":"Production"},
-  {"id":"member-05","name":"Placeholder Team Member","role":"Post-Production"},
-  {"id":"member-06","name":"Placeholder Team Member","role":"Project Management"},
-  {"id":"member-07","name":"Placeholder Team Member","role":"Operations"}
+  {
+    "id": "edan",
+    "name": "Member 1",
+    "role": "Creative Director"
+  },
+  {
+    "id": "ffi",
+    "name": "Member 2",
+    "role": "Head of Operations"
+  },
+  {
+    "id": "marcolp",
+    "name": "Member 3",
+    "role": "Creative Developer"
+  },
+  {
+    "id": "paul",
+    "name": "Member 4",
+    "role": "Motion Designer"
+  },
+  {
+    "id": "andrii",
+    "name": "Member 5",
+    "role": "Art Director"
+  },
+  {
+    "id": "luana",
+    "name": "Member 6",
+    "role": "Designer"
+  }
 ]

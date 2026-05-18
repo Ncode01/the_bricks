@@ -1,0 +1,65 @@
+/* The Bricks — global theme enforcement (load after about.CNa9RfUh.css) */
+
+/* Legacy WebGL / component font aliases */
+.aeonik,
+[class*="Aeonik"] {
+  font-family: Sora, system-ui, sans-serif !important;
+}
+
+html,
+body,
+#ui,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input,
+textarea,
+select {
+  font-family: Sora, system-ui, sans-serif;
+}
+
+#header-menu,
+#footer,
+#scroll-indicator,
+.about-award-header-text,
+#about-who-team-number,
+#home-goal-desc,
+[class*="mono"],
+.font-mono {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* Scroll + accents */
+#scroll-indicator-bar {
+  background: var(--bricks-primary) !important;
+}
+
+html.is-blue-bg #scroll-indicator-bar,
+html.is-black-bg #scroll-indicator-bar {
+  background: var(--bricks-secondary) !important;
+}
+
+/* Header / CTA hovers */
+#header-right-talk-btn.--is-contact-active,
+#header-right-menu-btn.--is-contact-active {
+  background: var(--bricks-primary) !important;
+}
+
+/* Forms + buttons using legacy blue token */
+#home-reel-cta:hover,
+#home-goal-cta:hover,
+#footer-newsletter-button,
+.project-details-btn:hover {
+  background: var(--bricks-primary) !important;
+  color: var(--bricks-light) !important;
+}
+
+/* Footer + menu surfaces */
+#footer-newsletter-input input::placeholder {
+  color: rgba(167, 110, 238, 0.55);
+}
+
