@@ -24737,10 +24737,13 @@ class Browser {
 const browser$1 = new Browser();
 let CDN_PATH = "";
 const _cdnHost = window.location.hostname;
-(_cdnHost == "lusion.co" ||
-  _cdnHost == "localhost" ||
-  _cdnHost == "127.0.0.1") &&
-  (CDN_PATH = "https://lusion.dev");
+const _cdnUseLusionDev =
+  _cdnHost === "lusion.co" ||
+  _cdnHost === "localhost" ||
+  _cdnHost === "127.0.0.1" ||
+  _cdnHost.endsWith(".web.app") ||
+  _cdnHost.endsWith(".firebaseapp.com");
+_cdnUseLusionDev && (CDN_PATH = "https://lusion.dev");
 const PROJECT_ASSET_ALIASES = {
   brand_anthem_film: "oryzo_ai",
   product_launch_campaign: "of_the_oak",
@@ -42151,13 +42154,19 @@ class WhoSubsectionTeam {
       (this.domTeamNumber = e.querySelector(
         "#about-who-team-number-center-item"
       )),
-      properties.loader.add(settings.TEAM_PATH + "team.json", {
-        onLoad: (t) => {
-          (this.teamDataList = t), this._createUIElements();
-          for (let r = 0; r < t.length; r++)
-            (t[r].index = r), (this.teamDataMap[t[r].id] = t[r]);
-        },
-      }),
+      properties.loader.add(
+        settings.LOCAL_TEAM_PATH + "team.json?v=20260518team",
+        {
+          onLoad: (t) => {
+            t = t.filter((m) => m.id !== "sunny");
+            for (let r = 0; r < t.length; r++)
+              (t[r].name = "Member " + (r + 1)),
+                (t[r].index = r),
+                (this.teamDataMap[t[r].id] = t[r]);
+            (this.teamDataList = t), this._createUIElements();
+          },
+        }
+      ),
       aboutHeroFaces.load(this.faceId),
       (this.letterMesh = new UfxMesh({
         uniforms: {

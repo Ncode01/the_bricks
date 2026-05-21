@@ -1,0 +1,7 @@
+**/node_modules/**
+**/.git/**
+**/scripts/**
+**/*.orig
+**/agent-transcripts/**
+lusion.co (1)/**
+lusion.co (2)/**
