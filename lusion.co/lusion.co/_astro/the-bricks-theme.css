@@ -27,7 +27,6 @@ select {
 #scroll-indicator,
 .about-award-header-text,
 #about-who-team-number,
-#home-goal-desc,
 [class*="mono"],
 .font-mono {
   font-family: Inter, system-ui, sans-serif;
@@ -51,7 +50,6 @@ html.is-black-bg #scroll-indicator-bar {
 
 /* Forms + buttons using legacy blue token */
 #home-reel-cta:hover,
-#home-goal-cta:hover,
 #footer-newsletter-button,
 .project-details-btn:hover {
   background: var(--bricks-primary) !important;
@@ -61,5 +59,44 @@ html.is-black-bg #scroll-indicator-bar {
 /* Footer + menu surfaces */
 #footer-newsletter-input input::placeholder {
   color: rgba(167, 110, 238, 0.55);
+}
+
+/* Home — featured work → contact CTA → footer */
+#home-featured {
+  padding-bottom: calc(var(--vh, 1vh) * 12) !important;
+}
+
+#home-hero-visual-container {
+  min-height: min(52vh, 520px);
+}
+
+#end-section {
+  height: calc(var(--vh, 1vh) * 100) !important;
+}
+
+#end-section-content-crosses,
+#end-section-subtitle,
+#end-bottom,
+#end-section-title-top-decoration,
+#end-section-title-bottom-left-decoration,
+#end-section-title-bottom-right-decoration {
+  display: none !important;
+}
+
+#end-section-title-link {
+  display: block;
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  line-height: 1;
+  font-size: clamp(2.5rem, 10vw, 7rem);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+#end-section-title-link:hover {
+  opacity: 0.85;
 }
 

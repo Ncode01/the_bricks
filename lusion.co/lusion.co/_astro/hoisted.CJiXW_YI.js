@@ -28351,14 +28351,14 @@ class HomeBalloons extends Stage3D {
       this.sharedUniforms.u_blurredTextureSizes.value.push(new Vector2());
   }
   preInit() {
-    properties.loader.add(
+      properties.loader.add(
       settings.MODEL_PATH +
         "home/" +
         (browser$1.isMobile ? "cross_ld" : "cross") +
         ".buf",
       {
         onLoad: (e) => {
-          this.geometry = e;
+          (this.geometry = e), this._initBalloons();
         },
       }
     ),
@@ -28385,6 +28385,11 @@ class HomeBalloons extends Stage3D {
       });
   }
   init() {
+    if (!this.geometry) return;
+    this._initBalloons();
+  }
+  _initBalloons() {
+    if (this.isReady) return;
     let e = math.getSeedRandomFn("balloon24");
     this.NEIGHBOUR_COUNT = this.NUM_BALLOONS - 1;
     let t = new ShaderMaterial({
@@ -30065,7 +30070,11 @@ class HomeHeroSection {
     (this.domHomeTitle._words = a.words),
       (a = new SplitType(this.domHomeScroll, { types: "words" })),
       (this.domHomeScroll._words = a.words),
+      homeBalloons.geometry &&
+        !homeBalloons.isReady &&
+        homeBalloons._initBalloons(),
       properties.hasInitialized &&
+        homeBalloons.isReady &&
         homeBalloons.resize(properties.width, properties.height);
   }
   _updateUi(e) {
@@ -36724,8 +36733,12 @@ class GoalSectionRanges {
   _debugTimelineItems = [];
   _debugTimelineIndicator;
   init(e) {
-    (this.domContainer = e.querySelector("#home-goal")),
-      (this.domImgIn = e.querySelector("#home-goal-image-in")),
+    if (
+      ((this.domContainer = e.querySelector("#home-goal")),
+      !this.domContainer)
+    )
+      return;
+    (this.domImgIn = e.querySelector("#home-goal-image-in")),
       (this.domImgOut = e.querySelector("#home-goal-image-out"));
     for (let t = 0; t < this.itemList.length; t++) {
       let r = this.itemList[t];
@@ -36771,24 +36784,10 @@ class GoalSectionRanges {
     }
   }
   resize(e, t) {
-    let r = scrollManager.getDomRange(this.domContainer),
-      n = scrollManager.getDomRange(this.domImgIn),
-      a = scrollManager.getDomRange(this.domImgOut);
-    this.baseY = n.top - properties.viewportHeight;
-    let c = r.bottom - this.baseY - (t + n.height) * 0.5 - (t + a.height) * 0.5;
-    (this.items.blackFrameShow.pixelCount = (t + n.height) * 0.5),
-      (this.items.astronautDrop.pixelCount = (t + a.height) * 0.5 + t);
-    let u =
-      scrollManager.getDomRange(footerSection.domContainer).bottom - r.bottom;
-    (this.items.astronautWait.pixelCount =
-      u - 0 * this.items.astronautDrop.pixelCount),
-      (this.totalPixelCount = 0);
+    (this.baseY = 0), (this.totalPixelCount = 1);
     for (let f = 0; f < this.itemList.length; f++) {
       let p = this.itemList[f];
-      (p.pixelFrom = this.totalPixelCount),
-        p.weight && (p.pixelCount = (c * p.weight) / this.totalTunnelWeight),
-        (this.totalPixelCount += p.pixelCount),
-        (p.pixelTo = this.totalPixelCount);
+      (p.pixelCount = 1), (p.pixelFrom = 0), (p.pixelTo = 1);
     }
     if (this.SHOW_DEBUG)
       for (let f = 0; f < this.itemList.length; f++) {
@@ -37175,6 +37174,35 @@ class GoalTunnels extends Stage3D {
       goalWhiteTunnelStickers.resize(e, t);
   }
   updateRatios() {
+    if (!this.isActive)
+      return (
+        (this.blackFrameInRatio = 0),
+        (this.blackTitleRatio = 0),
+        (this.blackTunnelRatio = 0),
+        (this.whiteFrameRatio = 0),
+        (this.whiteFrameOutRatio = 0),
+        (this.whiteFrameBreakRatio = 0),
+        (this.astronautDropRatio = 0),
+        (this.whiteTunnelRatio = 0),
+        (this.whiteTunnelAstronautRatio = 0),
+        (this.whiteTunnelAstronautOutRatio = 0),
+        (this.whiteTunnelWaitRatio = 0),
+        (this.isBlackTitleActive = !1),
+        (this.isBlackTunnelActive = !1),
+        (this.isWhiteTunnelActive = !1),
+        goalBlackTunnel.container && (goalBlackTunnel.container.visible = !1),
+        goalWhiteTunnel.container && (goalWhiteTunnel.container.visible = !1),
+        goalTunnelGlass.container && (goalTunnelGlass.container.visible = !1),
+        goalTunnelAstronauts.container &&
+          (goalTunnelAstronauts.container.visible = !1),
+        goalWhiteTunnelParticles.container &&
+          (goalWhiteTunnelParticles.container.visible = !1),
+        goalWhiteTunnelStickers.container &&
+          (goalWhiteTunnelStickers.container.visible = !1),
+        goalTunnelsBackground.container &&
+          (goalTunnelsBackground.container.visible = !1),
+        void (this.sharedUniforms.u_whiteTunnelRatio.value = 0)
+      );
     (this.blackFrameInRatio = math.saturate(
       homeGoalSectionRanges.getRange("blackFrameIn").ratio
     )),
@@ -37331,6 +37359,21 @@ class GoalTunnels extends Stage3D {
     this.add(goalTunnelAstronauts.container);
   }
   update(e) {
+    if (!this.isActive)
+      return (
+        goalTunnelAstronauts.container &&
+          (goalTunnelAstronauts.container.visible = !1),
+        goalBlackTunnel.container && (goalBlackTunnel.container.visible = !1),
+        goalWhiteTunnel.container && (goalWhiteTunnel.container.visible = !1),
+        goalTunnelGlass.container && (goalTunnelGlass.container.visible = !1),
+        goalWhiteTunnelParticles.container &&
+          (goalWhiteTunnelParticles.container.visible = !1),
+        goalWhiteTunnelStickers.container &&
+          (goalWhiteTunnelStickers.container.visible = !1),
+        goalTunnelsBackground.container &&
+          (goalTunnelsBackground.container.visible = !1),
+        void (goalTunnelEfx.amount = 0)
+      );
     this.isBlackTitleActive && properties.bgColor.setStyle("#000"),
       this.isBlackTunnelActive &&
         (properties.bgColor.setStyle("#000"),
@@ -37363,8 +37406,12 @@ class HomeGoalSectionTunnelTitle {
   RATIO_FROM = 0.25;
   RATIO_TO = 1;
   init(e) {
-    (this.domContainer = e.querySelector("#home-goal-tunnel-title")),
-      (this.domLines = e.querySelectorAll(".home-goal-tunnel-title-line"));
+    if (
+      ((this.domContainer = e.querySelector("#home-goal-tunnel-title")),
+      !this.domContainer)
+    )
+      return;
+    (this.domLines = e.querySelectorAll(".home-goal-tunnel-title-line"));
     for (let t = 0; t < this.domLines.length; t++) {
       let r = this.domLines[t],
         a = r.textContent.replace(/\s+/g, " ").split(" "),
@@ -37374,6 +37421,7 @@ class HomeGoalSectionTunnelTitle {
     }
   }
   resize(e, t) {
+    if (!this.domContainer) return;
     this.domContainer.style.transform = "translateZ(0)";
     let r = this.domContainer.getBoundingClientRect(),
       n = r.width,
@@ -37410,6 +37458,7 @@ class HomeGoalSectionTunnelTitle {
     }
   }
   update(e) {
+    if (!this.domContainer) return;
     let t = homeGoalSectionRanges.getRange("blackTitle"),
       r = math.fit(t.ratio, this.RATIO_FROM, this.RATIO_TO, 0, 1);
     if (
@@ -37468,8 +37517,11 @@ class GoalSection {
   sectionPaddingTop = 0;
   line = null;
   preInit(e) {
+    if (
+      ((this.domContainer = e.querySelector("#home-goal")), !this.domContainer)
+    )
+      return;
     homeGoalSectionRanges.init(e),
-      (this.domContainer = e.querySelector("#home-goal")),
       (this.domContext = e.querySelector("#home-goal-context")),
       (this.domContextInner = e.querySelector("#home-goal-context-inner")),
       (this.domTitle = e.querySelector("#home-goal-title")),
@@ -37521,6 +37573,7 @@ class GoalSection {
       this.lineVisual.preInit();
   }
   init() {
+    if (!this.domContainer) return;
     (this._placeholderTexture1 = properties.loader.load(
       settings.TEXTURE_PATH + "/tunnels/tablet.png",
       { type: "texture", flipY: !1, minFilter: LinearFilter }
@@ -37536,6 +37589,7 @@ class GoalSection {
   show() {}
   hide() {}
   resize(e, t) {
+    if (!this.domContainer) return;
     this._splitText(),
       scrollManager.resize(e, t),
       homeGoalSectionRanges.resize(e, t),
@@ -37548,38 +37602,38 @@ class GoalSection {
       ));
   }
   update(e) {
+    if (!this.domContainer) return;
     homeGoalSectionRanges.update(e);
     let t = scrollManager.getDomRange(this.domContainer),
       r = t.isActive,
-      n = scrollManager.getDomRange(this.domImgIn),
-      a = scrollManager.getDomRange(this.domImgInInner),
-      l = scrollManager.getDomRange(this.domImgOut),
-      c = scrollManager.getDomRange(this.domImgOutInner),
+      n = this.domImgIn
+        ? scrollManager.getDomRange(this.domImgIn)
+        : t,
+      a = this.domImgInInner
+        ? scrollManager.getDomRange(this.domImgInInner)
+        : t,
+      l = this.domImgOut
+        ? scrollManager.getDomRange(this.domImgOut)
+        : t,
+      c = this.domImgOutInner
+        ? scrollManager.getDomRange(this.domImgOutInner)
+        : t,
       u = 0;
-    (goalTunnels.isActive =
-      homeGoalSectionRanges.isActive && properties.hasInitialized),
+    (goalTunnels.isActive = !1),
       goalTunnels.resetAstronautLayer(),
       goalTunnelGlass.container && (goalTunnelGlass.container.visible = !1),
-      (this.uiBgColorNeedsOverride = goalTunnels.isActive),
-      this.uiBgColorNeedsOverride &&
-        (this.isUIBgBlack =
-          homeGoalSectionRanges.getRange("blackTitle", "blackTunnel")
-            .isActive ||
-          homeGoalSectionRanges.getRange("whiteFrameOut", "astronautWait")
-            .isActive);
+      goalTunnelAstronauts.container &&
+        (goalTunnelAstronauts.container.visible = !1),
+      (this.uiBgColorNeedsOverride = !1),
+      (this.isUIBgBlack = !1);
     let f = 0,
       p = 1,
       g,
       v,
       _ = homeGoalSectionRanges.getRange("blackFrameIn");
     if (
-      (properties.useMobileLayout
-        ? (this.domDescs.style.transform = "translateZ(0)")
-        : (this.domDescs.style.transform =
-            "translate3d(0," +
-            (n._top - this.sectionPaddingTop - t._top + n.height * 0.5) +
-            "px,0) translateY(-50%)"),
-      goalTunnels.isActive)
+      (this.domDescs.style.transform = "translateZ(0)"),
+      goalTunnels.isActive
     ) {
       let b = this.frameBgMesh.material.uniforms,
         C = math.saturate(homeGoalSectionRanges.ratio),
@@ -37765,13 +37819,14 @@ class GoalSection {
     } else
       this.lineVisual.update(e, t),
         (this.frameBgMesh.visible = !1),
-        (this.domContextInner.style.visibility = r ? "visible" : "hidden"),
+        (this.domContextInner.style.visibility = "visible"),
         (this.domContextInner.style.transform = "translateZ(0)"),
+        (this.lineVisual.container.visible = !1),
         this.lineVisual.container.position.set(0, 0, 0),
         this.lineVisual.container.quaternion.set(0, 0, 0, 1),
         this.lineVisual.container.scale.set(1, 1, 1),
         homeGoalSectionTunnelTitle.update(!1);
-    _.ratio >= 1 && (this.lineVisual.container.visible = !1),
+    (this.lineVisual.container.visible = !1),
       goalTunnels.updateRatios();
     let T = scrollManager.getDomRange(this.domContext, -u),
       M = T,
@@ -39704,7 +39759,7 @@ class HomePage extends Page {
   id = "home";
   hasEndVisual = !1;
   updateAudio = !1;
-  endSectionActiveThreshold = 2.5;
+  endSectionActiveThreshold = 0.15;
   preInit() {
     let e = this.domContainer;
     homeHeroSection.preInit(e),
@@ -39772,13 +39827,9 @@ class HomePage extends Page {
         let t = !0,
           r = !1,
           n = !1;
-        scrollManager.getDomRange(homeGoalSection.domContainer).screenRatio == 1
-          ? (properties.bgColor.setStyle(properties.blackColorHex),
-            (t = !1),
-            (r = !0))
-          : (properties.bgColor.setStyle(properties.offWhiteColorHex),
-            (t = !0),
-            (r = !1)),
+        properties.bgColor.setStyle(properties.offWhiteColorHex),
+          (t = !0),
+          (r = !1),
           homeGoalSection.uiBgColorNeedsOverride &&
             ((n = !1),
             homeGoalSection.isUIBgBlack
@@ -46605,13 +46656,14 @@ class FlipAnimation {
     }
     if (a && !this.useTextured) {
       let k = document.querySelector("#end-bottom");
-      flipSim.addColliderRect(
-        this.convertDomRectToTankRect(k.getBoundingClientRect()),
-        -1,
-        -1,
-        -1,
-        -1
-      );
+      k &&
+        flipSim.addColliderRect(
+          this.convertDomRectToTankRect(k.getBoundingClientRect()),
+          -1,
+          -1,
+          -1,
+          -1
+        );
     }
     this.hasDown = !1;
   }
@@ -46761,8 +46813,8 @@ class EndSection {
     (this.domContainer = document.getElementById("end-section")),
       (this.outerContainer = document.getElementById("end-section-outer")),
       (this.domContent = document.getElementById("end-section-content")),
-      (this.domTitle = document.getElementById("end-section-title")),
       (this.domTitleLink = document.getElementById("end-section-title-link")),
+      (this.domTitle = this.domTitleLink),
       (this.domTitleTopDecoration = document.getElementById(
         "end-section-title-top-decoration"
       )),
@@ -46781,12 +46833,13 @@ class EndSection {
   }
   init() {
     flipAnimation.init(),
-      properties.useMobileLayout ||
-        (this.domTitle.addEventListener(
+      this.domTitleLink &&
+        !properties.useMobileLayout &&
+        (this.domTitleLink.addEventListener(
           "mouseenter",
           this._onDomTitleMouseenter.bind(this)
         ),
-        this.domTitle.addEventListener(
+        this.domTitleLink.addEventListener(
           "mouseleave",
           this._onDomTitleMouseleave.bind(this)
         ));
@@ -46837,8 +46890,20 @@ class EndSection {
         (this.time += e);
       let f = u % this.ROLLUP_ANIMATION_INTERVAL,
         p = this.time % this.ROLLUP_ANIMATION_INTERVAL;
-      this.domTitle.style.pointerEvents =
-        c && this.activeRatio > 0.75 ? "auto" : "none";
+      this.domTitleLink &&
+        (this.domTitleLink.style.pointerEvents =
+          c && this.activeRatio > 0.75 ? "auto" : "none"),
+        (this.domTitleLink.style.opacity = String(
+          math.fit(this.activeRatio, 0, 0.35, 0, 1, ease.lusion)
+        )),
+        (this.domTitleLink.style.transform = `translate3d(0, ${math.fit(
+          this.activeRatio,
+          0,
+          0.5,
+          12,
+          0,
+          ease.lusion
+        )}%, 0)`);
       for (let v = 0; v < this.domCrosses.length; v++) {
         let _ = v / (this.domCrosses.length - 1),
           T = math.fit(
@@ -46854,7 +46919,11 @@ class EndSection {
           b = math.fit(T, 0, 1, 0, 180, ease.lusion);
         M.style.transform = `scale(${S}) rotate(${b}deg)`;
       }
-      if (!properties.useMobileLayout)
+      if (
+        !properties.useMobileLayout &&
+        this.domSubtitle &&
+        this.domSubtitle._splitted
+      )
         for (let v = 0; v < this.domSubtitle._splitted.words.length; v++) {
           let _ = this.domSubtitle._splitted.words[v],
             T = v / (this.domSubtitle._splitted.words.length - 1),
@@ -46876,129 +46945,65 @@ class EndSection {
             );
           _.style.transform = `translate3d(0, ${M}%, 0) rotate(${S}deg)`;
         }
-      for (let v = 0; v < this.domTitleLink._splitted.words.length; v++) {
-        let _ = this.domTitleLink._splitted.words[v],
-          T = v / (this.domTitleLink._splitted.words.length - 1);
-        f > p &&
-          ((_._randCharIndex = Math.floor(Math.random() * _._chars.length)),
-          _._ratio == 0 && (_._ratio = 0.001)),
-          _._ratio > 0 &&
-            ((_._ratio = math.saturate(
-              _._ratio + (c ? e / this.ROLLUP_ANIMATION_DURATION : -e * 2)
-            )),
-            _._ratio == 1 && (_._ratio = 0));
-        for (let M = 0; M < _._chars.length; M++) {
-          let S = _._chars[M],
-            b = M / (_._chars.length - 1),
-            C =
-              properties.viewportWidth >= settings.MOBILE_WIDTH
-                ? math.fit(
-                    this.activeRatio,
-                    T * 0.15 + b * 0.15,
-                    T * 0.15 + b * 0.15 + 0.7,
-                    100,
-                    0,
-                    ease.lusion
-                  )
-                : 0;
-          M === _._randCharIndex
-            ? (S._wrapper.style.transform = `translate3d(0, ${math.fit(
-                _._ratio,
-                T * 0.2,
-                T * 0.2 + 0.8,
-                0,
-                -100,
-                ease.lusion
-              )}%, 0)`)
-            : (S._wrapper.style.transform = "translateZ(0)"),
-            (S.style.transform = `translate3d(0, ${C}%, 0)`);
-        }
-      }
-      this.domTitleTopDecoration.style.transform = `scale3d(${math.fit(
-        this.hoverRatio,
-        0,
-        0.7,
-        0,
-        1,
-        ease.cubicInOut
-      )}, 1, 1)`;
-      let g = math.fit(this.hoverRatio, 0.2, 1, 0, 1, ease.cubicInOut);
-      (this.domTitleBottomLeftDecoration.style.transform = `scale3d(${math.fit(
-        g,
-        0,
-        0.35,
-        0,
-        1
-      )}, 1, 1)`),
-        (this.domTitleBottomRightDecoration.style.transform = `scale3d(${math.fit(
-          g,
-          0.4,
+      this.domTitleTopDecoration &&
+        (this.domTitleTopDecoration.style.transform = `scale3d(${math.fit(
+          this.hoverRatio,
+          0,
+          0.7,
+          0,
           1,
+          ease.cubicInOut
+        )}, 1, 1)`);
+      let g = math.fit(this.hoverRatio, 0.2, 1, 0, 1, ease.cubicInOut);
+      this.domTitleBottomLeftDecoration &&
+        (this.domTitleBottomLeftDecoration.style.transform = `scale3d(${math.fit(
+          g,
+          0,
+          0.35,
           0,
           1
-        )}, 1, 1)`);
+        )}, 1, 1)`),
+        this.domTitleBottomRightDecoration &&
+          (this.domTitleBottomRightDecoration.style.transform = `scale3d(${math.fit(
+            g,
+            0.4,
+            1,
+            0,
+            1
+          )}, 1, 1)`);
     } else (this._needsReset = !0), (flipAnimation.isActive = !1);
     flipAnimation.update(e);
   }
   _splitText() {
-    if (properties.useMobileLayout)
-      this.domSubtitle._splitted && this.domSubtitle._splitted.revert();
-    else {
-      this.domSubtitle._splitted = new SplitType(this.domSubtitle, {
-        types: "lines, words",
-      });
-      for (let e = 0; e < this.domSubtitle._splitted.lines.length; e++) {
-        let t = this.domSubtitle._splitted.lines[e],
-          r = document.createElement("div");
-        (r.style.position = "relative"),
-          (r.style.overflow = "hidden"),
-          r.append(t),
-          this.domSubtitle.append(r);
+    if (this.domSubtitle) {
+      if (properties.useMobileLayout)
+        this.domSubtitle._splitted && this.domSubtitle._splitted.revert();
+      else {
+        this.domSubtitle._splitted = new SplitType(this.domSubtitle, {
+          types: "lines, words",
+        });
+        for (let e = 0; e < this.domSubtitle._splitted.lines.length; e++) {
+          let t = this.domSubtitle._splitted.lines[e],
+            r = document.createElement("div");
+          (r.style.position = "relative"),
+            (r.style.overflow = "hidden"),
+            r.append(t),
+            this.domSubtitle.append(r);
+        }
       }
     }
-    this.domTitleLink._splitted = new SplitType(this.domTitleLink, {
-      types: "lines, words",
-      lineClass: "end-section-title-link-line",
-      wordClass: "end-section-title-link-word",
-    });
-    for (let e = 0; e < this.domTitleLink._splitted.lines.length; e++) {
-      let t = this.domTitleLink._splitted.lines[e];
-      e === 0
-        ? t.append(this.domTitleTopDecoration)
-        : (t.append(this.domTitleBottomLeftDecoration),
-          t.append(this.domTitleBottomRightDecoration));
-    }
-    for (let e = 0; e < this.domTitleLink._splitted.words.length; e++) {
-      let t = this.domTitleLink._splitted.words[e],
-        r = new SplitType(t, { types: "chars" });
-      (t._chars = r.chars), (t._ratio = 0);
-      for (let n = 0; n < t._chars.length; n++) {
-        let a = t._chars[n],
-          l = a.cloneNode(!0),
-          c = document.createElement("div");
-        c.classList.add("char-wrapper"),
-          (c.style.display = "inline-block"),
-          (a._wrapper = c),
-          c.append(a),
-          c.append(l),
-          t.append(c);
-      }
-    }
+    this.domTitleLink &&
+      (this.domTitleLink.style.transform = "translateZ(0)");
   }
   _reset() {
     (this._needsReset = !1),
       (this.time = 0),
       (this.hoverRatio = 0),
-      (this.activeRatio = 0);
-    for (let e = 0; e < this.domTitleLink._splitted.words.length; e++) {
-      let t = this.domTitleLink._splitted.words[e];
-      for (let r = 0; r < t._chars.length; r++) {
-        let n = t._chars[r];
-        (n._wrapper.style.transform = "translate3d(0, 0, 0)"),
-          (n.style.transform = "translate3d(0, 0, 0)");
-      }
-    }
-    flipAnimation.needsReset = !0;
+      (this.activeRatio = 0),
+      this.domTitleLink &&
+        ((this.domTitleLink.style.opacity = "0"),
+        (this.domTitleLink.style.transform = "translate3d(0, 12%, 0)")),
+      (flipAnimation.needsReset = !0);
   }
   _onDomTitleMouseenter() {
     this.isHover = !0;
@@ -50539,7 +50544,7 @@ class App {
       properties.bgColor.setStyle(properties.bgColorHex),
       (aboutPageHeroEfxPrepass.isActive = aboutHero.isActive),
       (aboutPageHeroEfx.isActive = aboutHero.isActive),
-      (goalTunnelEfx.isActive = goalTunnels.isActive),
+      (goalTunnelEfx.isActive = !!goalTunnels.isActive),
       (properties.bloom.amount = properties.bloomAmount),
       (properties.bloom.radius = properties.bloomRadius),
       (properties.bloom.threshold = properties.bloomThreshold),
