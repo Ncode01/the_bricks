@@ -100,3 +100,95 @@ html.is-black-bg #scroll-indicator-bar {
   opacity: 0.85;
 }
 
+/* About / Projects — end CTA then full footer (scrollable) */
+#page-extra-sections {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+#footer-section {
+  position: relative;
+  z-index: 2;
+}
+
+/* About — second scroll (details): readable copy layout */
+#about-who-subsection-details {
+  padding-left: var(--base-padding-x);
+  padding-right: var(--base-padding-x);
+  box-sizing: border-box;
+}
+
+#about-who-desc-top {
+  margin-top: calc(var(--base-padding-y) * 2);
+  width: 100%;
+  max-width: 40rem;
+}
+
+#about-who-desc-bottom {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  margin-top: 2.5rem;
+  width: 100%;
+  max-width: 40rem;
+  margin-left: 0;
+  text-align: left;
+}
+
+@media (min-width: 813px) {
+  #about-who-desc-bottom {
+    margin-left: auto;
+    text-align: right;
+    max-width: 36rem;
+  }
+}
+
+#about-who-desc-top > span span,
+#about-who-desc-bottom > span span {
+  margin-right: 0.35em;
+  margin-left: 0;
+}
+
+/* Projects page title — keep PROJECTS on one line */
+#projects-main-title-wrapper {
+  white-space: nowrap;
+  max-width: 100%;
+  width: max-content;
+  font-size: min(17vw, 12.25vw);
+}
+
+#projects-main-title {
+  white-space: nowrap;
+  display: inline-block;
+  overflow: visible;
+}
+
+#projects-main-title .char {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#projects-main-title-project-number {
+  white-space: nowrap;
+}
+
+@media (max-width: 812px) {
+  #projects-main-title-wrapper {
+    font-size: min(15vw, 12vw);
+  }
+
+  #projects-main-title-project-number {
+    right: -7vw;
+    top: 1.5vw;
+    font-size: 5vw;
+  }
+
+  #projects-main-title-project-arrow {
+    right: -7vw;
+    bottom: 4vw;
+    width: 5vw;
+    height: 5vw;
+  }
+}
+

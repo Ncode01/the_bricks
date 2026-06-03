@@ -42023,42 +42023,17 @@ class WhoSubsectionDetails {
       if (properties.useMobileLayout)
         n = math.fit(r, -0.75, -0.25, 0, 1) * math.fit(r, 0.25, 0.5, 1, 0);
       else {
-        n = 1;
-        let a, l;
-        (a = this.domTopWords), (l = a._lineCount);
-        for (let c = 0; c < a.length; c++) {
-          let u = a[c],
-            f = u._line / l,
-            p = c / a.length,
-            g = math.fit(r, -1 + f * 0.5, -0.1, 0, 1),
-            v = math.fit(r, -1 + p * 0.5, -0.1, 0, 1),
-            _ = math.fit(r, 0.1, 0.5 + f * 0.5, 0, 1),
-            T = math.fit(r, 0.1, 0.5 + p * 0.5, 0, 1);
-          (u.style.transform =
-            "translate3d(" +
-            (math.fit(g, 0, 1, 10, 0) + math.fit(_, 0, 1, 0, -10)) +
-            "em, 0, 0) translate3d(" +
-            (math.fit(r, -1, 0, -50, 0) + math.fit(r, 0.1, 1, 0, 20)) +
-            "vw, 0, 0)"),
-            (u.style.opacity = v * (1 - T));
-        }
-        (a = this.domBottomWords), (l = a._lineCount);
-        for (let c = 0; c < a.length; c++) {
-          let u = a[c],
-            f = u._line / l,
-            p = c / a.length,
-            g = math.fit(r, -0.6 + f * 0.5, -0.1, 0, 1),
-            v = math.fit(r, -0.6 + p * 0.5, -0.1, 0, 1),
-            _ = math.fit(r, 0.2, 0.5 + f * 0.5, 0, 1),
-            T = math.fit(r, 0.2, 0.5 + p * 0.5, 0, 1);
-          (u.style.transform =
-            "translate3d(" +
-            (math.fit(g, 0, 1, 10, 0) + math.fit(_, 0, 1, 0, -10)) +
-            "em, 0, 0) translate3d(" +
-            (math.fit(r, -1, 0, -20, 0) + math.fit(r, 0, 1, 0, 50)) +
-            "vw, 0, 0)"),
-            (u.style.opacity = v * (1 - T));
-        }
+        n = math.fit(r, -0.15, 0.2, 0, 1);
+        const a = (l) => {
+          for (let c = 0; c < l.length; c++) {
+            const u = l[c],
+              f = c / Math.max(l.length - 1, 1),
+              p = math.fit(r, -0.05 + f * 0.15, 0.15 + f * 0.2, 0, 1);
+            (u.style.transform = "translate3d(0, 0, 0)"),
+              (u.style.opacity = p);
+          }
+        };
+        a(this.domTopWords), a(this.domBottomWords);
       }
       this.domContainer.style.opacity = n;
     }
@@ -45039,6 +45014,8 @@ let _c = new Color();
 class AboutPage extends Page {
   path = "about";
   id = "about";
+  hasEndVisual = !1;
+  endSectionActiveThreshold = 0.15;
   endVisualColor = properties.offWhiteColorHex;
   preInit() {
     let e = this.domContainer;
@@ -45239,7 +45216,9 @@ const projectsPageAudios = new ProjectsPageAudios();
 class ProjectsPage extends Page {
   path = "projects";
   id = "projects";
-  endVisualUseTextured = !0;
+  hasEndVisual = !1;
+  endSectionActiveThreshold = 0.15;
+  endVisualUseTextured = !1;
   preInit() {
     let e = this.domContainer;
     projectsMainSection.preInit(e);
