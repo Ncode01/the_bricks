@@ -24876,6 +24876,8 @@ const LOADER_DEBUG = (() => {
   const enabled =
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1" ||
+    window.location.hostname.endsWith(".web.app") ||
+    window.location.hostname.endsWith(".firebaseapp.com") ||
     new URLSearchParams(window.location.search).has("loaderDebug");
   const pending = new Map();
   const completed = [];
@@ -25560,6 +25562,13 @@ function load$4() {
     (e.onreadystatechange = function () {
       o._onXmlHttpChange();
     }),
+    (e.onerror = function () {
+      o.xmlhttp && _xhrAbortLoad(o, "network error");
+    }),
+    (e.ontimeout = function () {
+      o.xmlhttp && _xhrAbortLoad(o, "timeout");
+    }),
+    (e.timeout = 6e4),
     e.open(this.method, this.url, !0),
     (this.xmlhttp.responseType = this.responseType),
     IS_SUPPORT_XML_HTTP_REQUEST ? e.send(null) : e.send();
@@ -25567,15 +25576,20 @@ function load$4() {
 function _onXmlHttpProgress(o) {
   this.loadingSignal.dispatch(o.loaded / o.total);
 }
+function _xhrAbortLoad(o, e) {
+  LOADER_DEBUG.trackDone(o.url, !1, e || "xhr fail"),
+    LOADER_DEBUG.warn("XHR failed — continuing", o.url, e || ""),
+    (o.content = o.content || null),
+    (o.xmlhttp = undef$2),
+    _super$6._onLoad.call(o);
+}
 function _onXmlHttpChange() {
   if (this.xmlhttp.readyState !== 4) return;
   if (this.xmlhttp.status === 200) this._onLoad(this.xmlhttp);
   else
-    LOADER_DEBUG.warn(
-      "XHR failed (loader may hang)",
-      this.url,
-      "status",
-      this.xmlhttp.status
+    _xhrAbortLoad(
+      this,
+      "status " + (this.xmlhttp.status || "0")
     );
 }
 function _onLoad$5() {
@@ -25655,16 +25669,37 @@ _p$3._onLoad = _onLoad$2;
 function load$3() {
   _super$3.load.apply(this, arguments);
   var o = this,
-    e = o.content;
-  (e.src = this.url),
+    e = o.content,
+    t = !1,
+    r = function (n) {
+      if (t || o.isLoaded) return;
+      (t = !0),
+        clearTimeout(o._loadTimer),
+        LOADER_DEBUG.trackDone(o.url, !1, n || "audio"),
+        e.removeEventListener("canplaythrough", o.boundOnLoad, !1),
+        e.removeEventListener("canplay", o.boundOnLoad, !1),
+        e.removeEventListener("error", o._audioFail, !1),
+        _super$3._onLoad.call(o);
+    };
+  (o._audioFail = function () {
+    r("audio error");
+  }),
+    (e.src = this.url),
     this.loadThrough
       ? e.addEventListener("canplaythrough", this.boundOnLoad, !1)
       : e.addEventListener("canplay", this.boundOnLoad, !1),
+    e.addEventListener("error", o._audioFail, !1),
+    (o._loadTimer = setTimeout(function () {
+      r("audio timeout");
+    }, 2e4)),
     e.load();
 }
 function _onLoad$2() {
-  this.content.removeEventListener("canplaythrough", this.boundOnLoad, !1),
+  clearTimeout(this._loadTimer),
+    this.content.removeEventListener("canplaythrough", this.boundOnLoad, !1),
     this.content.removeEventListener("canplay", this.boundOnLoad, !1),
+    this._audioFail &&
+      this.content.removeEventListener("error", this._audioFail, !1),
     !this.isLoaded && _super$3._onLoad.call(this);
 }
 var AbstractItem$2 = AbstractItem_1,
@@ -25695,17 +25730,39 @@ _p$2.load = load$2;
 _p$2._onLoad = _onLoad$1;
 function load$2() {
   _super$2.load.apply(this, arguments);
-  var o = this.content;
-  (o.preload = "auto"),
-    (o.src = this.url),
+  var o = this,
+    e = o.content,
+    t = !1,
+    r = function (n) {
+      if (t || o.isLoaded) return;
+      (t = !0),
+        clearTimeout(o._loadTimer),
+        LOADER_DEBUG.trackDone(o.url, !1, n || "video"),
+        e.removeEventListener("canplaythrough", o.boundOnLoad, !1),
+        e.removeEventListener("canplay", o.boundOnLoad, !1),
+        e.removeEventListener("error", o._videoFail, !1),
+        _super$2._onLoad.call(o);
+    };
+  (o._videoFail = function () {
+    r("video error");
+  }),
+    (e.preload = "auto"),
+    (e.src = this.url),
     this.loadThrough
-      ? o.addEventListener("canplaythrough", this.boundOnLoad, !1)
-      : o.addEventListener("canplay", this.boundOnLoad, !1),
-    o.load();
+      ? e.addEventListener("canplaythrough", this.boundOnLoad, !1)
+      : e.addEventListener("canplay", this.boundOnLoad, !1),
+    e.addEventListener("error", o._videoFail, !1),
+    (o._loadTimer = setTimeout(function () {
+      r("video timeout");
+    }, 3e4)),
+    e.load();
 }
 function _onLoad$1() {
-  this.content.removeEventListener("canplaythrough", this.boundOnLoad),
+  clearTimeout(this._loadTimer),
+    this.content.removeEventListener("canplaythrough", this.boundOnLoad),
     this.content.removeEventListener("canplay", this.boundOnLoad),
+    this._videoFail &&
+      this.content.removeEventListener("error", this._videoFail),
     !this.isLoaded && _super$2._onLoad.call(this);
 }
 var AbstractItem$1 = AbstractItem_1,
@@ -38349,15 +38406,20 @@ class Header {
   preInit() {
     (this.domContainer = document.getElementById("header")),
       (this.domHeaderContainer = document.getElementById("header-menu")),
-      (this.domLogoSvg = document.querySelector("#header-logo svg")),
+      (this.domLogoSvg = document.querySelector(
+        "#header-logo .header-logo-img, #header-logo svg"
+      )),
       (this.domBackground = document.getElementById("header-background")),
       (this.domRight = document.getElementById("header-right")),
       (this.domRightSoundBtn = document.getElementById(
         "header-right-sound-btn"
       )),
-      (this.domRightSoundBtnCanvas =
-        this.domRightSoundBtn.querySelector("canvas")),
-      (this.domRightSoundBtnCtx = this.domRightSoundBtnCanvas.getContext("2d")),
+      this.domRightSoundBtn &&
+        ((this.domRightSoundBtnCanvas =
+          this.domRightSoundBtn.querySelector("canvas")),
+        this.domRightSoundBtnCanvas &&
+          (this.domRightSoundBtnCtx =
+            this.domRightSoundBtnCanvas.getContext("2d"))),
       (this.domRightTalkBtn = document.getElementById("header-right-talk-btn")),
       (this.domRightTalkBtnContainer = document.getElementById(
         "header-right-talk-container"
@@ -38420,34 +38482,41 @@ class Header {
       });
   }
   init() {
-    settings.USE_AUDIO || (this.domRightSoundBtn.style.visibility = "hidden"),
+    if (this._didInit) return;
+    this._didInit = !0;
+    settings.USE_AUDIO ||
+      (this.domRightSoundBtn &&
+        (this.domRightSoundBtn.style.visibility = "hidden")),
       input.onClicked.add(() => {
         !input.hasThroughElem(this.domRightMenuBtn, "click") &&
           !input.hasThroughElem(this.domHeaderContainer, "click") &&
           this._enableMenu(!1);
       }),
-      this.domRightSoundBtn.addEventListener("mouseenter", (e) => {
-        let t = this.domRightSoundBtn.getBoundingClientRect(),
-          r = e.clientX - t.left - t.width / 2,
-          n = e.clientY - t.top - t.height / 2;
-        (this.soundBtnHoverAngle = Math.atan2(n, r) - Math.PI / 2),
-          (this.isSoundBtnHover = !0);
-      }),
-      this.domRightSoundBtn.addEventListener("mouseleave", () => {
-        this.isSoundBtnHover = !1;
-      }),
-      this.domRightSoundBtn.addEventListener(
-        "click",
-        this._onDomRightSoundBtn.bind(this)
-      ),
-      this.domRightMenuBtn.addEventListener(
-        "click",
-        this._domRightMenuBtnClick.bind(this)
-      ),
-      this.domMenuLinkContact.addEventListener(
-        "click",
-        this._onDomMenuLinkContact.bind(this)
-      ),
+      this.domRightMenuBtn &&
+        this.domRightMenuBtn.addEventListener(
+          "click",
+          this._domRightMenuBtnClick.bind(this)
+        ),
+      this.domMenuLinkContact &&
+        this.domMenuLinkContact.addEventListener(
+          "click",
+          this._onDomMenuLinkContact.bind(this)
+        ),
+      this.domRightSoundBtn &&
+        (this.domRightSoundBtn.addEventListener("mouseenter", (e) => {
+          let t = this.domRightSoundBtn.getBoundingClientRect(),
+            r = e.clientX - t.left - t.width / 2,
+            n = e.clientY - t.top - t.height / 2;
+          (this.soundBtnHoverAngle = Math.atan2(n, r) - Math.PI / 2),
+            (this.isSoundBtnHover = !0);
+        }),
+        this.domRightSoundBtn.addEventListener("mouseleave", () => {
+          this.isSoundBtnHover = !1;
+        }),
+        this.domRightSoundBtn.addEventListener(
+          "click",
+          this._onDomRightSoundBtn.bind(this)
+        )),
       this.containers.forEach((e, t) => {
         e.style.setProperty("--open-delay", t / 50 + "s"),
           e.style.setProperty(
@@ -41895,7 +41964,7 @@ class WhoSubsectionWeAre {
     (this.domContainer = e.querySelector("#about-who-subsection-we-are")),
       (this.domScroll = e.querySelector("#about-who-title-main-scroll")),
       (this.domLeftTexts = e.querySelectorAll(
-        "#about-who-title-left-1, #about-who-title-left-2 .bricks-wordmark--inline, #about-who-title-left-3, #about-who-title-left-4 span"
+        "#about-who-title-left-1, #about-who-title-left-2 .bricks-logo-img--inline, #about-who-title-left-3, #about-who-title-left-4 span"
       )),
       (this.domRightTexts = e.querySelectorAll(".about-who-title-right-text")),
       aboutWhoLogo.preInit(e);
@@ -48703,7 +48772,14 @@ class BufItem extends XHRItem {
   }
   _onLoad() {
     if (!this.content) {
-      const e = this.xmlhttp.response;
+      const e = this.xmlhttp && this.xmlhttp.response;
+      if (!e || !e.byteLength) {
+        LOADER_DEBUG.trackDone(this.url, !1, "buf empty"),
+          (this.content = new BufferGeometry()),
+          (this.xmlhttp = void 0),
+          super._onLoad(this);
+        return;
+      }
       let t = new Uint32Array(e, 0, 1)[0],
         r = JSON.parse(
           String.fromCharCode.apply(null, new Uint8Array(e, 4, t))
@@ -50624,6 +50700,19 @@ class Preloader {
   }
   update(e) {
     if (!this.isActive) return;
+    this.percentTarget < 0.995
+      ? (this._stallPct !== this.percentTarget &&
+          ((this._stallPct = this.percentTarget),
+          (this._stallAt = performance.now())),
+        this._stallAt &&
+          performance.now() - this._stallAt > 18e3 &&
+          (LOADER_DEBUG.warn(
+            "PRELOADER stall escape at",
+            Math.round(this.percentTarget * 100) + "%"
+          ),
+          (this.percentTarget = 1),
+          (this._stallAt = null)))
+      : (this._stallAt = null),
     (this.percent = Math.min(
       this.percentTarget,
       this.percent +
@@ -50724,9 +50813,12 @@ class Links {
     });
   }
   init() {
+    if (this._didInit) return;
+    this._didInit = !0;
     this.links.forEach((e) => {
-      e.el.addEventListener("mouseenter", this._onLinkMouseenter.bind(this)),
-        e.el.addEventListener("mouseleave", this._onLinkMouseleave.bind(this));
+      e.el &&
+        (e.el.addEventListener("mouseenter", this._onLinkMouseenter.bind(this)),
+        e.el.addEventListener("mouseleave", this._onLinkMouseleave.bind(this)));
     });
   }
   resize() {
@@ -50936,6 +51028,7 @@ function run() {
     ui.preload(init, start);
 }
 function init() {
+  if (properties.hasInitialized) return;
   LOADER_DEBUG.log("init — pages + webgl");
   input.init(),
     pagesManager.init(),
