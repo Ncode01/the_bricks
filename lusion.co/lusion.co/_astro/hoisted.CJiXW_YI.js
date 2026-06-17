@@ -6873,6 +6873,7 @@ class Mesh extends Object3D {
     );
   }
   updateMorphTargets() {
+    if (!this.geometry) return;
     const t = this.geometry.morphAttributes,
       r = Object.keys(t);
     if (r.length > 0) {
@@ -21375,6 +21376,7 @@ let Line$1 = class extends Object3D {
     }
   }
   updateMorphTargets() {
+    if (!this.geometry) return;
     const t = this.geometry.morphAttributes,
       r = Object.keys(t);
     if (r.length > 0) {
@@ -21499,6 +21501,7 @@ class Points extends Object3D {
     }
   }
   updateMorphTargets() {
+    if (!this.geometry) return;
     const t = this.geometry.morphAttributes,
       r = Object.keys(t);
     if (r.length > 0) {
@@ -25568,7 +25571,7 @@ function load$4() {
     (e.ontimeout = function () {
       o.xmlhttp && _xhrAbortLoad(o, "timeout");
     }),
-    (e.timeout = 6e4),
+    (e.timeout = 25e3),
     e.open(this.method, this.url, !0),
     (this.xmlhttp.responseType = this.responseType),
     IS_SUPPORT_XML_HTTP_REQUEST ? e.send(null) : e.send();
@@ -25840,20 +25843,29 @@ ImageItem$1.extensions = ["jpg", "gif", "png"];
 quickLoader$2.register(ImageItem$1);
 function load() {
   _super.load.apply(this, arguments);
-  var o = this.content;
-  (o.onload = this.boundOnLoad),
-    (o.onerror = () => {
-      LOADER_DEBUG.trackDone(this.url, !1, "image onerror"),
-        delete o.onload,
-        delete o.onerror,
-        (this.width = 1),
-        (this.height = 1),
-        _super._onLoad.call(this);
+  var o = this,
+    e = this.content;
+  clearTimeout(this._loadTimeout),
+    (this._loadTimeout = setTimeout(() => {
+      o.isLoaded ||
+        (LOADER_DEBUG.trackDone(o.url, !1, "image timeout"),
+        e.onerror && e.onerror());
+    }, 25e3)),
+    (e.onload = this.boundOnLoad),
+    (e.onerror = () => {
+      clearTimeout(o._loadTimeout),
+        LOADER_DEBUG.trackDone(o.url, !1, "image onerror"),
+        delete e.onload,
+        delete e.onerror,
+        (o.width = 1),
+        (o.height = 1),
+        _super._onLoad.call(o);
     }),
-    (o.src = this.url);
+    (e.src = this.url);
 }
 function _onLoad() {
-  delete this.content.onload,
+  clearTimeout(this._loadTimeout),
+    delete this.content.onload,
     delete this.content.onerror,
     (this.width = this.content.width),
     (this.height = this.content.height),
@@ -40743,12 +40755,41 @@ class AboutHeroGround {
   blurCacheRenderTarget = null;
   preInit() {
     properties.loader.add(settings.MODEL_PATH + "about/terrain.buf", {
-      onLoad: (e) => (this.geometry = e),
+      onLoad: (e) => {
+        (this.geometry = e), this._initGroundMesh();
+      },
     }),
       (this.texture = properties.loader.load(
         settings.TEXTURE_PATH + "about/terrain_shadow_light_height.webp",
         { type: "texture", flipY: !0, minFilter: LinearFilter }
       ).content);
+  }
+  _initGroundMesh() {
+    if (this.groundMesh || !this.geometry || !this.currRenderTarget) return;
+    (this.groundMesh = new Mesh(
+      this.geometry,
+      new ShaderMaterial({
+        uniforms: Object.assign(
+          {
+            u_texture: { value: this.texture },
+            u_groundShadowTexture: { value: this.currRenderTarget.texture },
+            u_color: { value: new Color() },
+            u_bgColor: { value: new Color() },
+            u_noiseStableFactor: sim.sharedUniforms.u_noiseStableFactor,
+            u_fogA: { value: 0.03 },
+            u_fogB: { value: 0.285 },
+          },
+          light.sharedUniforms,
+          aboutHeroScatter.sharedUniforms,
+          blueNoise.sharedUniforms,
+          aboutHero.sharedUniforms
+        ),
+        vertexShader: groundVert,
+        fragmentShader: groundFrag,
+      })
+    )),
+      (this.groundMesh.material.extensions.derivatives = !0),
+      this.container.add(this.groundMesh);
   }
   init() {
     (this.prevRenderTarget = fboHelper.createRenderTarget(
@@ -40774,30 +40815,7 @@ class AboutHeroGround {
         })
       )),
       (this.mesh.material.defines.LIGHT_SHADOW_SAMPLE_COUNT = 8),
-      (this.groundMesh = new Mesh(
-        this.geometry,
-        new ShaderMaterial({
-          uniforms: Object.assign(
-            {
-              u_texture: { value: this.texture },
-              u_groundShadowTexture: { value: this.currRenderTarget.texture },
-              u_color: { value: new Color() },
-              u_bgColor: { value: new Color() },
-              u_noiseStableFactor: sim.sharedUniforms.u_noiseStableFactor,
-              u_fogA: { value: 0.03 },
-              u_fogB: { value: 0.285 },
-            },
-            light.sharedUniforms,
-            aboutHeroScatter.sharedUniforms,
-            blueNoise.sharedUniforms,
-            aboutHero.sharedUniforms
-          ),
-          vertexShader: groundVert,
-          fragmentShader: groundFrag,
-        })
-      )),
-      (this.groundMesh.material.extensions.derivatives = !0),
-      this.container.add(this.groundMesh),
+      this._initGroundMesh(),
       fboHelper.clearColor(1, 1, 1, 1, this.currRenderTarget);
   }
   update(e) {
@@ -41737,8 +41755,9 @@ class AboutHero extends Stage3D {
       this.add(this.hudContainer),
       aboutPageHeroEfxPrepass.scene.add(aboutHeroFaces.container),
       aboutPageHeroEfxPrepass.scene.add(aboutHeroLetters.container),
-      (this.cameraSplinePositions = this.cameraSplineGeo.attributes.position),
-      (this.cameraSplineOrientation = this.cameraSplineGeo.attributes.orient),
+      this.cameraSplineGeo &&
+        ((this.cameraSplinePositions = this.cameraSplineGeo.attributes.position),
+        (this.cameraSplineOrientation = this.cameraSplineGeo.attributes.orient)),
       taskManager.add(this),
       taskManager.add(aboutPageHeroEfxPrepass.scene);
   }
@@ -41748,6 +41767,7 @@ class AboutHero extends Stage3D {
       aboutHeroFaces.resize(e, t);
   }
   syncProperties(e) {
+    if (!this.cameraSplinePositions || !this.cameraSplineOrientation) return;
     this.sharedUniforms.u_introRatio.value = this.introRatio;
     const t =
         math.saturate(this.initialSplineRatio) * 149 +
@@ -41964,7 +41984,7 @@ class WhoSubsectionWeAre {
     (this.domContainer = e.querySelector("#about-who-subsection-we-are")),
       (this.domScroll = e.querySelector("#about-who-title-main-scroll")),
       (this.domLeftTexts = e.querySelectorAll(
-        "#about-who-title-left-1, #about-who-title-left-2 .bricks-logo-img--inline, #about-who-title-left-3, #about-who-title-left-4 span"
+        "#about-who-title-left-1, #about-who-title-left-3, #about-who-title-left-4 span"
       )),
       (this.domRightTexts = e.querySelectorAll(".about-who-title-right-text")),
       aboutWhoLogo.preInit(e);
@@ -42090,14 +42110,14 @@ class WhoSubsectionDetails {
     if (((this.domContainer.style.visibility = t ? "visible" : "hidden"), t)) {
       let n = 0;
       if (properties.useMobileLayout)
-        n = math.fit(r, -0.75, -0.25, 0, 1) * math.fit(r, 0.25, 0.5, 1, 0);
+        n = math.fit(r, -0.85, -0.35, 0, 1) * math.fit(r, 0.1, 0.35, 1, 0);
       else {
-        n = math.fit(r, -0.15, 0.2, 0, 1);
+        n = math.fit(r, -0.25, 0.05, 0, 1);
         const a = (l) => {
           for (let c = 0; c < l.length; c++) {
             const u = l[c],
               f = c / Math.max(l.length - 1, 1),
-              p = math.fit(r, -0.05 + f * 0.15, 0.15 + f * 0.2, 0, 1);
+              p = math.fit(r, -0.2 + f * 0.1, 0.02 + f * 0.12, 0, 1);
             (u.style.transform = "translate3d(0, 0, 0)"),
               (u.style.opacity = p);
           }
@@ -50706,6 +50726,7 @@ class Preloader {
           (this._stallAt = performance.now())),
         this._stallAt &&
           performance.now() - this._stallAt > 18e3 &&
+          !properties.loader.isLoading &&
           (LOADER_DEBUG.warn(
             "PRELOADER stall escape at",
             Math.round(this.percentTarget * 100) + "%"
@@ -50724,6 +50745,7 @@ class Preloader {
           this.MIN_PRELOAD_DURATION
     )),
       this.percentTarget >= 0.999 &&
+        !properties.loader.isLoading &&
         (properties.hasInitialized || this._initCallback(),
         (this.percentToStart = settings.SKIP_ANIMATION
           ? 1

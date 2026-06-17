@@ -42,7 +42,7 @@ html.is-black-bg #scroll-indicator-bar {
   background: var(--bricks-secondary) !important;
 }
 
-/* The Bricks logo — transparent Secondary logo.png */
+/* The Bricks logo — bricks-logo-horizontal.png (2739×994, ~2.76:1) */
 #header-logo,
 #header-logo .header-logo-img,
 .bricks-logo-img {
@@ -60,34 +60,35 @@ html.is-black-bg #scroll-indicator-bar {
   align-self: center;
   line-height: 0;
   flex-shrink: 0;
-  margin-right: 0.25rem;
+  margin-right: 0.5rem;
 }
 
-/* Header wordmark — explicit clamp so it looks substantial at any viewport.
-   Container + header are position:fixed so growing taller won't shift page content. */
+/* Header — scale by height; width follows intrinsic 2.76:1 aspect */
 #header-logo .header-logo-img,
 #header-logo img {
   display: block;
-  height: clamp(3rem, 4vw, 3.5rem);   /* 48–56 px; ~30 % taller than the original svg */
+  height: clamp(2.25rem, 3.25vw, 2.75rem);
   width: auto;
-  max-width: min(15rem, 52vw);
+  max-width: min(calc(clamp(2.25rem, 3.25vw, 2.75rem) * 2.76), 68vw);
+  aspect-ratio: 2739 / 994;
   object-fit: contain;
   object-position: left center;
   mix-blend-mode: normal;
 }
 
-/* SVG fallback — original about.css has width:7.5em; just ensure height stays auto */
 #header-logo svg {
-  height: auto !important;
-  max-width: min(14rem, 52vw);
+  height: clamp(2.25rem, 3.25vw, 2.75rem) !important;
+  width: auto !important;
+  max-width: min(calc(clamp(2.25rem, 3.25vw, 2.75rem) * 2.76), 68vw);
 }
 
-/* In-page wordmarks (about hero, team, etc.) */
+/* In-page wordmarks (about hero animation source, etc.) */
 .bricks-logo-img {
   display: block;
-  height: clamp(2.25rem, 5vw, 3.5rem);
+  height: clamp(2rem, 4.5vw, 2.75rem);
   width: auto;
-  max-width: min(18rem, 90vw);
+  max-width: min(calc(clamp(2rem, 4.5vw, 2.75rem) * 2.76), 80vw);
+  aspect-ratio: 2739 / 994;
   object-fit: contain;
   object-position: left center;
   mix-blend-mode: normal;
@@ -105,44 +106,98 @@ html.is-black-bg #scroll-indicator-bar {
   border: 0;
 }
 
+/* About hero — no inline wordmark between WE ARE / A CREATIVE */
 #about-who-title-left-2 {
+  display: none !important;
+}
+
+#about-who-title-left {
+  left: var(--base-padding-x);
+  max-width: calc(50% - var(--base-padding-x) - 2vw);
+  line-height: 0.95;
+}
+
+#about-who-title-right {
+  max-width: calc(50% - var(--base-padding-x) - 2vw);
+}
+
+#about-who-title-left-1,
+#about-who-title-left-3,
+#about-who-title-left-4 {
   display: block;
-  margin: 0.12em 0 0.1em;
-  padding: 0;
-  line-height: 0;
+}
+
+#about-who-title-left-4 span {
+  white-space: nowrap;
+}
+
+.about-who-title-right-text {
+  white-space: nowrap;
+}
+
+#about-who-title-left-3 {
+  margin-top: 0;
+}
+
+@media (min-width: 813px) and (max-width: 1280px) {
+  #about-who-title-left,
+  #about-who-title-right {
+    font-size: 3.25vw;
+  }
+}
+
+#about-who-title-main {
+  text-align: right;
+}
+
+#about-who-title-main-scroll {
+  position: relative;
+  right: 0;
+  display: inline-block;
 }
 
 .bricks-logo-img--inline {
-  height: clamp(2.5rem, 7vw, 4rem);
+  height: clamp(2rem, 5vw, 2.75rem);
   width: auto;
-  max-width: min(20rem, 92vw);
-}
-
-.bricks-logo-img--team {
-  height: clamp(2rem, 5vw, 3rem);
-  width: auto;
-  max-width: min(16rem, 92vw);
+  max-width: min(calc(clamp(2rem, 5vw, 2.75rem) * 2.76), 85vw);
+  aspect-ratio: 2739 / 994;
 }
 
 #about-who-team-title {
   margin: 0;
   padding: 0;
-  line-height: 0;
-  font-size: 0;
+  line-height: 1;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  color: inherit;
 }
 
 @media (max-width: 812px) {
   #header-logo .header-logo-img,
   #header-logo img,
   #header-logo svg {
-    height: 2.75rem;
+    height: 2.125rem;
     width: auto;
-    max-width: min(62vw, 11.5rem);
+    max-width: min(68vw, calc(2.125rem * 2.76));
   }
 
   .bricks-logo-img--inline {
-    height: clamp(2rem, 8vw, 2.75rem);
+    height: clamp(1.75rem, 7vw, 2.25rem);
     width: auto;
+    max-width: min(85vw, calc(clamp(1.75rem, 7vw, 2.25rem) * 2.76));
+  }
+
+  #about-who-title-left,
+  #about-who-title-right {
+    max-width: 100%;
+    left: auto;
+  }
+
+  #about-who-title-left-4 span,
+  .about-who-title-right-text {
+    white-space: normal;
   }
 }
 
@@ -217,33 +272,66 @@ html.is-black-bg #scroll-indicator-bar {
 }
 
 /* About — second scroll (details).
-   #about-who-desc-bottom is position:absolute; bottom:50px right:72px.
-   The section font-size is 4vw (57.6px at 1440px).  Our paragraph is ~30 words
-   so at 57.6px it renders ~860px tall and overflows its own section (scrambled).
-   Drop it to a secondary-body size so it fits cleanly within the visible area. */
+   Keep original corners (top-left / bottom-right); normalize word-span rhythm. */
+#about-who-desc-top {
+  width: auto;
+  max-width: min(58vw, 46rem);
+  margin-top: calc(clamp(1rem, 1vw, 2rem) * 2 + var(--base-padding-y));
+  text-align: left;
+}
+
+#about-who-desc-top > span span {
+  display: inline;
+  margin-left: 0;
+  margin-right: 0.28em;
+}
+
 #about-who-desc-bottom {
-  max-width: 55vw;
-  font-size: 1.5vw;      /* ~21.6px at 1440px — secondary body copy under large headline */
+  left: auto;
+  right: var(--base-padding-x);
+  bottom: var(--base-padding-y);
+  text-align: right;
+  max-width: min(42vw, 34rem);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
   line-height: 1.55;
 }
+
+#about-who-desc-bottom > span span {
+  display: inline;
+  margin-left: 0;
+  margin-right: 0.28em;
+}
+
 @media (max-width: 812px) {
+  #about-who-desc-top {
+    max-width: 100%;
+  }
+
   #about-who-desc-bottom {
     max-width: 90vw;
     font-size: 3.5vw;
-    right: var(--base-padding-x);
     left: auto;
+    right: var(--base-padding-x);
   }
 }
 
-/* Projects page title — keep PROJECTS on one line */
+/* Projects page title — keep PROJECTS on one line; stack count + arrow beside title */
 #projects-main-title-wrapper {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  column-gap: 1.25vw;
+  row-gap: 0.35vw;
+  align-items: end;
   white-space: nowrap;
   max-width: 100%;
   width: max-content;
-  font-size: min(17vw, 12.25vw);
+  font-size: min(17vw, 11.25vw);
 }
 
 #projects-main-title {
+  grid-column: 1;
+  grid-row: 1 / span 2;
   white-space: nowrap;
   display: inline-block;
   overflow: visible;
@@ -255,25 +343,79 @@ html.is-black-bg #scroll-indicator-bar {
 }
 
 #projects-main-title-project-number {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin-top: 0.4em;
+  font-size: 0.24em;
   white-space: nowrap;
+}
+
+#projects-main-title-project-arrow {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  width: 0.24em;
+  height: 0.24em;
+  margin-bottom: 0.2em;
+}
+
+/* Projects grid — smaller cards with breathing room */
+.project-list {
+  max-width: min(1180px, 88vw);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+@media (min-width: 813px) {
+  .project-item {
+    grid-column: span 5 !important;
+  }
+
+  .project-item:nth-child(odd) {
+    grid-column-start: 1;
+  }
+
+  .project-item:nth-child(even) {
+    grid-column-start: 8;
+  }
+
+  .project-item-main {
+    padding-top: 56%;
+  }
 }
 
 @media (max-width: 812px) {
   #projects-main-title-wrapper {
-    font-size: min(15vw, 12vw);
+    font-size: min(15vw, 11vw);
+    column-gap: 2vw;
+    row-gap: 0.5vw;
   }
 
   #projects-main-title-project-number {
-    right: -7vw;
-    top: 1.5vw;
-    font-size: 5vw;
+    font-size: 0.28em;
+    margin-top: 0.35em;
   }
 
   #projects-main-title-project-arrow {
-    right: -7vw;
-    bottom: 4vw;
-    width: 5vw;
-    height: 5vw;
+    width: 0.28em;
+    height: 0.28em;
+  }
+
+  .project-list {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
