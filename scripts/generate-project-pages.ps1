@@ -68,6 +68,7 @@ function Extract-ElementById([string]$html, [string]$id) {
 }
 
 function Get-ThumbnailHtml([string]$slug) {
+  $filename = "/assets/projects/$slug/home"
   $ids = $youtubeIds[$slug]
   if ($ids -and $ids.Count -gt 0) {
     $vid = $ids[0]
@@ -78,6 +79,7 @@ function Get-ThumbnailHtml([string]$slug) {
   data-thumb-id="$vid"
   data-width="1296"
   data-height="1620"
+  data-filename="$filename"
   data-type="image"
   data-fullscreen
 ></div>
@@ -88,9 +90,38 @@ function Get-ThumbnailHtml([string]$slug) {
   class="project-details-item is-image project-youtube-thumbnail project-thumbnail-placeholder"
   data-width="1296"
   data-height="1620"
+  data-filename="$filename"
   data-type="image"
   data-fullscreen
 ></div>
+"@
+}
+
+function Get-HiddenCtaHtml() {
+  return @"
+<a id="project-details-launch-cta" class="project-details-btn bricks-cta-hidden" href="/" hidden aria-hidden="true" tabindex="-1" data-link-type="regular">
+  <span id="project-details-launch-cta-dot"></span>
+  <p id="project-details-launch-cta-text"></p>
+  <span id="project-details-launch-cta-arrow">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M9 9h6m0 0v6m0-6-6 6"></path>
+    </svg>
+  </span>
+</a>
+"@
+}
+
+function Get-HiddenMobileCtaHtml() {
+  return @"
+<a id="project-details-launch-cta-mobile" class="project-details-btn bricks-cta-hidden" href="/" hidden aria-hidden="true" tabindex="-1" data-link-type="regular">
+  <span id="project-details-launch-cta-mobile-dot"></span>
+  <p id="project-details-launch-cta-mobile-text"></p>
+  <span id="project-details-launch-cta-mobile-arrow">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M9 9h6m0 0v6m0-6-6 6"></path>
+    </svg>
+  </span>
+</a>
 "@
 }
 
@@ -163,7 +194,7 @@ $links</div>
 function Patch-ProjectDetails([string]$details, [string]$slug) {
   $details = [regex]::Replace(
     $details,
-    '(?s)<div class="project-details-item is-image"[^>]*></div>',
+    '(?s)<div\s+class="project-details-item is-image[^"]*"[^>]*>\s*</div>',
     (Get-ThumbnailHtml $slug)
   )
 
@@ -175,20 +206,55 @@ function Patch-ProjectDetails([string]$details, [string]$slug) {
   if ($projectUrls -and $projectUrls.Count -eq 1) {
     $cta = Get-LaunchCtaHtml $projectUrls[0]
     $mobile = Get-MobileCtaHtml $projectUrls[0]
-    $details = [regex]::Replace($details, $launchCtaPattern, $cta)
-    $details = [regex]::Replace($details, $mobileCtaPattern, $mobile)
-    $details = [regex]::Replace($details, $linksPattern, (Get-LinksSectionHtml $slug))
-  }
-  elseif ($projectUrls -and $projectUrls.Count -gt 1) {
-    $details = [regex]::Replace($details, $launchCtaPattern, "")
-    $details = [regex]::Replace($details, $mobileCtaPattern, "")
-    $details = [regex]::Replace($details, $linksPattern, (Get-LinksSectionHtml $slug))
   }
   else {
-    $details = [regex]::Replace($details, $launchCtaPattern, "")
-    $details = [regex]::Replace($details, $mobileCtaPattern, "")
+    $cta = Get-HiddenCtaHtml
+    $mobile = Get-HiddenMobileCtaHtml
+  }
+
+  if ($details -match 'id="project-details-launch-cta"') {
+    $details = [regex]::Replace($details, $launchCtaPattern, $cta)
+  }
+  else {
+    $details = [regex]::Replace(
+      $details,
+      '(?s)(<div id="project-details-desc">.*?</div>)',
+      "`$1`n                $cta"
+    )
+  }
+
+  if ($details -match 'id="project-details-launch-cta-mobile"') {
+    $details = [regex]::Replace($details, $mobileCtaPattern, $mobile)
+  }
+  else {
+    $details = [regex]::Replace(
+      $details,
+      '(?s)(<div id="project-details-right">.*?<div id="project-details-side-list">.*?</div>)',
+      "`$1`n                $mobile"
+    )
+  }
+
+  if ($projectUrls -and $projectUrls.Count -gt 0) {
+    if ($details -match 'id="project-details-side-list-links"') {
+      $details = [regex]::Replace($details, $linksPattern, (Get-LinksSectionHtml $slug))
+    }
+    else {
+      $details = [regex]::Replace(
+        $details,
+        '(?s)(<div id="project-details-side-list-services">.*?</div>)',
+        "`$1`n                  $(Get-LinksSectionHtml $slug)"
+      )
+    }
+  }
+  else {
     $details = [regex]::Replace($details, $linksPattern, "")
   }
+
+  $details = [regex]::Replace(
+    $details,
+    'class="project-details-item is-text is-credits"(?: data-type="text")*',
+    'class="project-details-item is-text is-credits" data-type="text"'
+  )
 
   return $details
 }
@@ -202,9 +268,14 @@ $shellBefore = $Matches[1] -replace '<div id="projects" class="page">$', '<div i
 $shellAfter = $Matches[2]
 
 $responsiveLink = '    <link rel="stylesheet" href="/_astro/bricks-responsive-fixes.css?v=20260618fix1" />' + "`n"
+$navigationFixScript = '    <script src="/_astro/bricks-navigation-fix.js?v=20260618fix1"></script>' + "`n"
 
 if ($shellBefore -notlike "*bricks-responsive-fixes.css*") {
   $shellBefore = $shellBefore -replace '(<link rel="stylesheet" href="/_astro/the-bricks-theme\.css[^"]*" />)', "`$1`n$responsiveLink"
+}
+
+if ($shellBefore -notlike "*bricks-navigation-fix.js*") {
+  $shellBefore = $shellBefore -replace '(<script type="module" src="/_astro/hoisted\.CJiXW_YI\.js[^"]*"></script>)', "$navigationFixScript    `$1"
 }
 
 $shellBefore = $shellBefore -replace '<body>', '<body class="bricks-project-detail-page">'
@@ -228,7 +299,9 @@ foreach ($slug in $youtubeIds.Keys) {
   $page = [regex]::Replace($page, '<title>.*?</title>', "<title>$pageTitle</title>", 1)
 
   $outPath = Join-Path $projectsDir "$slug\index.html"
-  Set-Content -Path $outPath -Value $page -Encoding UTF8 -NoNewline
+  $tmpPath = "$outPath.tmp"
+  Set-Content -Path $tmpPath -Value $page -Encoding UTF8 -NoNewline
+  Move-Item -Path $tmpPath -Destination $outPath -Force
   Write-Host "Generated: $slug"
 }
 

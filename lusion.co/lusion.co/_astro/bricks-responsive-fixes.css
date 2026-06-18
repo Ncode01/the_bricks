@@ -45,6 +45,20 @@ svg {
   pointer-events: none;
 }
 
+/* JS requires launch CTA nodes; hide inactive placeholders */
+#project-details:not(.has-cta) #project-details-launch-cta,
+#project-details:not(.has-cta) #project-details-launch-cta-mobile,
+.bricks-cta-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* YouTube thumbnail must win over WebGL texture when asset is fallback */
+.project-details-item.is-image.project-youtube-thumbnail {
+  background-color: #1a1528;
+}
+
 .about-team-roster {
   display: none;
 }

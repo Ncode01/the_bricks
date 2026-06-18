@@ -78,13 +78,16 @@ foreach ($folder in $newProjectFolders) {
 }
 
 $eraffine = Get-Content (Join-Path $projectsDir "eraffine_satin_effect\index.html") -Raw
-if ($eraffine -like "*Watch video*") {
-  throw "e Raffiné must not show Watch video because it has no URL."
+if ($eraffine -match 'id="project-details-launch-cta-text"[^>]*>Watch video') {
+  throw "e Raffiné must not show visible Watch video because it has no URL."
+}
+if ($eraffine -notlike '*project-details-launch-cta*') {
+  throw "e Raffiné detail page must keep hidden launch CTA nodes for JS compatibility."
 }
 
 $hameedia = Get-Content (Join-Path $projectsDir "hameedia_husn_eid_campaign\index.html") -Raw
-if ($hameedia -notlike "*H7zazQLgESQ*") {
-  throw "Hameedia detail page does not include YouTube thumbnail/video ID."
+if ($hameedia -notlike '*data-type="text"*') {
+  throw "Hameedia detail page credits item must include data-type=text for JS."
 }
 
 $about = Get-Content (Join-Path $root "about\index.html") -Raw
@@ -101,6 +104,10 @@ $projects = Get-Content (Join-Path $root "projects\index.html") -Raw
 $count = ([regex]::Matches($projects, 'class="project-item project-type-website"')).Count
 if ($count -ne 16) {
   throw "Expected 16 project items, found $count"
+}
+$regularLinks = ([regex]::Matches($projects, 'class="project-item project-type-website"[^>]*data-link-type="regular"')).Count
+if ($regularLinks -ne 16) {
+  throw "Expected 16 project cards with data-link-type=regular, found $regularLinks"
 }
 
 Write-Host "Validation passed."

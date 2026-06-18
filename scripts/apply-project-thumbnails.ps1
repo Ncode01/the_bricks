@@ -22,8 +22,15 @@ $thumbMap = @{
   "shandong_sweet_sour_chicken" = "ivE0oA1_Jr8"
 }
 
-function Update-ThumbnailsInFile([string]$filePath) {
+function Write-FileAtomic([string]$path, [string]$content) {
+  $tmpPath = "$path.tmp"
+  Set-Content -Path $tmpPath -Value $content -Encoding UTF8 -NoNewline
+  Move-Item -Path $tmpPath -Destination $path -Force
+}
+
+function Update-ProjectCardsInFile([string]$filePath) {
   $html = Get-Content $filePath -Raw
+
   foreach ($slug in $thumbMap.Keys) {
     $vid = $thumbMap[$slug]
     $imageHtml = if ($vid) {
@@ -39,30 +46,72 @@ function Update-ThumbnailsInFile([string]$filePath) {
       '                    <div class="project-item-image project-youtube-thumbnail project-thumbnail-placeholder" aria-hidden="true"></div>'
     }
 
-    $pattern = "(?s)(<a[^>]*data-id=`"$slug`"[^>]*>.*?<div class=`"project-item-main`">\s*)<div class=`"project-item-image`"></div>"
-    if ($html -notmatch $pattern) {
-      continue
+    $blockPattern = "(?s)(<a\s+class=`"project-item project-type-website`"[^>]*data-id=`"$slug`"[^>]*)(>)(.*?)(</a>)"
+    $m = [regex]::Match($html, $blockPattern)
+    if (-not $m.Success) { continue }
+
+    $open = $m.Groups[1].Value
+    $gt = $m.Groups[2].Value
+    $inner = $m.Groups[3].Value
+    $close = $m.Groups[4].Value
+
+    if ($open -notlike '*data-link-type=*') {
+      $open = $open + ' data-link-type="regular"'
     }
-    $html = [regex]::Replace($html, $pattern, "`${1}$imageHtml", 1)
+
+    $inner = [regex]::Replace(
+      $inner,
+      '(?s)<div class="project-item-main">\s*<div class="project-item-image[^"]*"[^>]*>\s*</div>',
+      "<div class=`"project-item-main`">`n                  $imageHtml"
+    )
+    if ($inner -notlike '*project-youtube-thumbnail*') {
+      $inner = [regex]::Replace(
+        $inner,
+        '(?s)<div class="project-item-main">\s*<div class="project-item-image"></div>',
+        "<div class=`"project-item-main`">`n                  $imageHtml"
+      )
+    }
+
+    $replacement = $open + $gt + $inner + $close
+    $html = $html.Remove($m.Index, $m.Length).Insert($m.Index, $replacement)
   }
-  Set-Content -Path $filePath -Value $html -Encoding UTF8 -NoNewline
-  Write-Host "Updated thumbnails in: $filePath"
+
+  Write-FileAtomic $filePath $html
+  Write-Host "Updated project cards in: $filePath"
 }
 
-$responsiveLink = '    <link rel="stylesheet" href="/_astro/bricks-responsive-fixes.css?v=20260618fix1" />'
+$responsiveLink = '    <link rel="stylesheet" href="/_astro/bricks-responsive-fixes.css?v=20260618fix2" />'
+$navigationFixScript = '    <script src="/_astro/bricks-navigation-fix.js?v=20260618fix1"></script>'
+
+function Add-NavigationFixScript([string]$filePath) {
+  $html = Get-Content $filePath -Raw
+  if ($html -like '*bricks-navigation-fix.js*') { return }
+  if ($html -notmatch '<script type="module" src="/_astro/hoisted\.CJiXW_YI\.js') { return }
+  $html = $html -replace '(<script type="module" src="/_astro/hoisted\.CJiXW_YI\.js[^"]*"></script>)', "$navigationFixScript`n    `$1"
+  Write-FileAtomic $filePath $html
+  Write-Host "Added navigation fix script to: $filePath"
+}
 
 foreach ($rel in @("index.html", "projects\index.html", "about\index.html")) {
   $path = Join-Path $webRoot $rel
   if ($rel -eq "index.html" -or $rel -eq "projects\index.html") {
-    Update-ThumbnailsInFile $path
+    Update-ProjectCardsInFile $path
   }
 
   $html = Get-Content $path -Raw
   if ($html -notlike "*bricks-responsive-fixes.css*") {
     $html = $html -replace '(<link rel="stylesheet" href="/_astro/the-bricks-theme\.css[^"]*" />)', "`$1`n$responsiveLink"
-    Set-Content -Path $path -Value $html -Encoding UTF8 -NoNewline
+    Write-FileAtomic $path $html
     Write-Host "Added responsive CSS link to: $rel"
   }
 }
 
-Write-Host "Thumbnails and CSS links applied."
+foreach ($rel in @("index.html", "projects\index.html", "about\index.html")) {
+  Add-NavigationFixScript (Join-Path $webRoot $rel)
+}
+
+Get-ChildItem (Join-Path $webRoot "projects\*\index.html") | ForEach-Object {
+  Add-NavigationFixScript $_.FullName
+}
+
+Write-Host "Thumbnails, CSS links, and navigation fix applied."
