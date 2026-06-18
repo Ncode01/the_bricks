@@ -37,10 +37,57 @@ if (Test-Path $splitAssets) {
   }
 }
 
-Write-Host "Removing old physical project detail folders from cPanel package..."
+Write-Host "Removing old placeholder project folders from cPanel package..."
 $projectsDir = Join-Path $dist "projects"
-if (Test-Path $projectsDir) {
-  Get-ChildItem $projectsDir -Directory | Remove-Item -Recurse -Force
+$oldProjectFolders = @(
+  "behind_the_scenes_content",
+  "brand_anthem_film",
+  "brand_story_series",
+  "campaign_toolkit",
+  "case_study_film",
+  "commercial_spot",
+  "culture_campaign",
+  "documentary_short",
+  "event_recap_film",
+  "explainer_film",
+  "founder_story",
+  "launch_teaser",
+  "product_demo_film",
+  "product_launch_campaign",
+  "recruitment_campaign",
+  "social_content_series",
+  "testimonial_series"
+)
+foreach ($folder in $oldProjectFolders) {
+  $path = Join-Path $projectsDir $folder
+  if (Test-Path $path) {
+    Remove-Item $path -Recurse -Force
+  }
+}
+
+$newProjectFolders = @(
+  "hameedia_husn_eid_campaign",
+  "cfw_day_2_mikail_hameed",
+  "fashion_bug_avurudu_2026",
+  "cool_planet_modano_denim",
+  "eraffine_satin_effect",
+  "elvoir_valentines_day_campaign",
+  "jasper_house_surf_lifestyle",
+  "jasper_house_art_of_surfing_thushan",
+  "jasper_house_lina_yoga_journey",
+  "flying_ravana_world_tourism_day_dilum_dissanayake",
+  "acres_98_world_tourism_day_thashinthan_panchanathan",
+  "hilton_colombo_oktoberfest_2023",
+  "taj_samudra_golden_dragon",
+  "dandex_confidence_street_interviews",
+  "shandong_crystal_fried_rice",
+  "shandong_sweet_sour_chicken"
+)
+foreach ($folder in $newProjectFolders) {
+  $path = Join-Path $projectsDir "$folder\index.html"
+  if (!(Test-Path $path)) {
+    throw "Missing required project detail page in package: $folder/index.html"
+  }
 }
 
 Write-Host "Writing .htaccess..."
@@ -55,10 +102,12 @@ DirectoryIndex index.html
   # Clean URL support for About
   RewriteRule ^about/?$ /about/index.html [L]
 
-  # Clean URL support for Projects
+  # Clean URL support for Projects index
   RewriteRule ^projects/?$ /projects/index.html [L]
 
-  # Match Firebase behaviour: all /projects/... routes go to projects index
+  # Fallback only when a physical project detail folder/file does not exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^projects/.+/?$ /projects/index.html [L]
 </IfModule>
 
@@ -68,6 +117,9 @@ DirectoryIndex index.html
   </FilesMatch>
   <FilesMatch "\.(js|css)$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(jpg|jpeg|png|webp|gif|svg)$">
+    Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
 </IfModule>
 '@
@@ -90,16 +142,6 @@ foreach ($item in $required) {
   if (!(Test-Path $path)) {
     throw "Missing required package item: $item"
   }
-}
-
-Write-Host "Checking old project folders were removed..."
-$remainingProjectFolders = @()
-if (Test-Path $projectsDir) {
-  $remainingProjectFolders = Get-ChildItem $projectsDir -Directory
-}
-if ($remainingProjectFolders.Count -gt 0) {
-  $names = ($remainingProjectFolders | Select-Object -ExpandProperty Name) -join ", "
-  throw "Project detail folders still exist in package. Remove them first: $names"
 }
 
 Write-Host "Creating ZIP..."

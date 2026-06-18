@@ -1,0 +1,383 @@
+/* The Bricks — mobile & thumbnail safety overrides (load after the-bricks-theme.css) */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* YouTube project card & detail thumbnails */
+.project-youtube-thumbnail {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  overflow: hidden;
+}
+
+.project-thumbnail-placeholder {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(203, 148, 247, 0.45), transparent 35%),
+    linear-gradient(135deg, #1a1528, #3a2d52 52%, #A76EEE);
+}
+
+.project-item-main,
+.project-item-image {
+  overflow: hidden;
+}
+
+.project-item-image::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.18));
+  pointer-events: none;
+}
+
+.about-team-roster {
+  display: none;
+}
+
+@media (max-width: 812px) {
+  :root {
+    --base-padding-x: clamp(1rem, 5vw, 1.35rem);
+    --base-padding-y: clamp(1rem, 4vw, 1.25rem);
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden !important;
+  }
+
+  #ui,
+  #page-container,
+  #page-container-inner {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  #header-container {
+    width: calc(100% - 1rem);
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+
+  #header-logo .header-logo-img,
+  #header-logo img {
+    height: 1.9rem !important;
+    max-width: 44vw !important;
+  }
+
+  #header-right {
+    gap: 0.35rem;
+  }
+
+  #header-right-sound-btn {
+    display: none !important;
+  }
+
+  #header-right-talk-btn {
+    max-width: 8rem;
+  }
+
+  #header-right-talk-btn-text {
+    white-space: nowrap;
+  }
+
+  #header-menu-links {
+    width: 100%;
+  }
+
+  .header-menu-link {
+    font-size: clamp(2rem, 12vw, 4rem);
+  }
+
+  /* About page */
+  #about,
+  #about-who,
+  #about-who-subsection-container {
+    width: 100%;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #about-who {
+    padding-top: 5.5rem;
+  }
+
+  .about-who-subsection {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 3rem var(--base-padding-x);
+  }
+
+  #about-who-subsection-we-are {
+    min-height: 100svh !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  #about-who-title-main,
+  #about-who-title-left,
+  #about-who-title-right {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+
+  #about-who-title-main-scroll {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  #about-who-title-left,
+  #about-who-title-right {
+    font-size: clamp(2.35rem, 11vw, 4.25rem) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.055em;
+  }
+
+  #about-who-title-left-4 span,
+  .about-who-title-right-text {
+    white-space: normal !important;
+  }
+
+  #about-who-subsection-details {
+    display: block;
+    padding-top: 2rem;
+  }
+
+  #about-who-desc-top,
+  #about-who-desc-bottom {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: left !important;
+    font-size: clamp(1.05rem, 4.5vw, 1.35rem) !important;
+    line-height: 1.55 !important;
+    margin: 0 0 1.25rem 0 !important;
+  }
+
+  #about-who-subsection-team {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  #about-who-team {
+    display: none !important;
+  }
+
+  .about-team-roster {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    padding: 0 var(--base-padding-x) 3rem;
+  }
+
+  .about-team-roster article {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+  }
+
+  .about-team-roster h3 {
+    font-size: clamp(1.35rem, 6vw, 2rem);
+    line-height: 1.05;
+    margin: 0 0 0.5rem;
+  }
+
+  .about-team-roster p {
+    font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+    line-height: 1.6;
+    margin: 0.5rem 0 0;
+  }
+
+  #about-how,
+  #about-expertise,
+  [id*="how"],
+  [id*="expertise"] {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .about-process-item,
+  .about-expertise-item,
+  .expertise-item,
+  .process-item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #about-who-team-title,
+  h2,
+  h3,
+  h4 {
+    overflow-wrap: anywhere;
+  }
+
+  /* Projects listing */
+  #projects-main {
+    padding-top: 6rem;
+  }
+
+  #projects-main-title-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    font-size: clamp(3rem, 16vw, 5rem) !important;
+    padding: 0 var(--base-padding-x);
+  }
+
+  #projects-main-title {
+    white-space: normal !important;
+  }
+
+  .project-list {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 var(--base-padding-x) 3rem !important;
+  }
+
+  .project-item {
+    grid-column: auto !important;
+    grid-column-start: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .project-item-main {
+    width: 100% !important;
+    padding-top: 62% !important;
+    border-radius: 1.1rem;
+    overflow: hidden;
+  }
+
+  .project-item-footer {
+    padding-top: 0.75rem;
+  }
+
+  .project-item-line-1 {
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .project-item-line-2-inner {
+    font-size: clamp(1rem, 5vw, 1.35rem) !important;
+    line-height: 1.15 !important;
+    overflow-wrap: anywhere;
+  }
+
+  /* Project detail */
+  .bricks-project-detail-page #project-details,
+  #project-details {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 6rem var(--base-padding-x) 3rem !important;
+    overflow: visible !important;
+  }
+
+  #project-details-items-wrapper,
+  #project-details-items-move-container {
+    position: relative !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .project-details-item.is-image {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  #project-details-meta {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem 0 0 !important;
+  }
+
+  #project-details-title {
+    font-size: clamp(2rem, 10vw, 4rem) !important;
+    line-height: 0.98 !important;
+    overflow-wrap: anywhere;
+  }
+
+  #project-details-left,
+  #project-details-right {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #project-details-desc {
+    font-size: clamp(0.98rem, 4vw, 1.1rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  #project-details-side-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .project-details-side-list-item {
+    font-size: 0.95rem !important;
+    line-height: 1.45 !important;
+  }
+
+  #project-details-preview {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    margin-top: 2rem;
+  }
+
+  #project-details-preview-title {
+    font-size: clamp(1.75rem, 8vw, 3rem) !important;
+    overflow-wrap: anywhere;
+  }
+}
