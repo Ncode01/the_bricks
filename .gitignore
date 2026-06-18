@@ -1,0 +1,40 @@
+# Build / packaging outputs
+dist-cpanel/
+dist-cpanel-verify/
+the-bricks-cpanel-upload.zip
+
+# Firebase local cache (keep firebase.json and .firebaserc tracked)
+.firebase/
+
+# Duplicate snapshot folders (not deployed)
+lusion.co (1)/
+lusion.co (2)/
+
+# Backup copies from content edits
+*.orig
+
+# Dependencies
+node_modules/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Cursor agent transcripts (local only)
+agent-transcripts/

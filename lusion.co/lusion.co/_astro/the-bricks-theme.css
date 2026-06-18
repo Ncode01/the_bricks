@@ -419,3 +419,12 @@ html.is-black-bg #scroll-indicator-bar {
   }
 }
 
+/* Hidden legacy sections kept for scroll/animation JS hooks */
+.bricks-section-hidden {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}

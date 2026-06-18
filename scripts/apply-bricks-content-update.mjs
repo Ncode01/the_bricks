@@ -281,7 +281,12 @@ function updateProjectLists() {
       `<span id="projects-main-title-project-number">${PROJECTS.length}</span>`
     );
     if (rel === "index.html") {
-      html = replaceBetween(html, '<div class="project-list">', '<a id="home-featured-cta"', featuredCards);
+      html = replaceBetween(
+        html,
+        '<div class="project-list">',
+        '<a id="home-featured-cta"',
+        `${featuredCards}\n              </div>\n              `
+      );
     } else {
       html = replaceBetween(
         html,
@@ -523,8 +528,37 @@ function updateAboutPage() {
 
   html = html.replace(
     /<div id="about-clients" class="section">[\s\S]*?<\/div>\s*(?=<div id="about-award")/,
-    ""
+    `<div id="about-clients" class="section bricks-section-hidden" aria-hidden="true">
+              <div id="about-clients-header">
+                <div id="about-clients-title"> </div>
+                <div id="about-clients-desc"> </div>
+              </div>
+              <div id="about-clients-carousel">
+                <div class="about-clients-carousel-line"></div>
+                <div class="about-clients-carousel-line"></div>
+                <div class="about-clients-carousel-line"></div>
+              </div>
+            </div>
+            `
   );
+
+  if (!html.includes('id="about-clients"')) {
+    html = html.replace(
+      /<div id="about-team-roster" hidden>[\s\S]*?<\/div>\s*<div id="about-award"/,
+      (match) => match.replace('<div id="about-award"', `<div id="about-clients" class="section bricks-section-hidden" aria-hidden="true">
+              <div id="about-clients-header">
+                <div id="about-clients-title"> </div>
+                <div id="about-clients-desc"> </div>
+              </div>
+              <div id="about-clients-carousel">
+                <div class="about-clients-carousel-line"></div>
+                <div class="about-clients-carousel-line"></div>
+                <div class="about-clients-carousel-line"></div>
+              </div>
+            </div>
+            <div id="about-award"`)
+    );
+  }
 
   const processHtml = PROCESS_STEPS.map(processAwardItem).join("\n                ");
   const processSectionInner = `
