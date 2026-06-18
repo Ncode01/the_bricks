@@ -1,32 +1,20 @@
 [
   {
     "id": "edan",
-    "name": "Member 1",
-    "role": "Creative Director"
+    "name": "Eshan Manusanka",
+    "role": "Filmmaker / Strategy & Marketing",
+    "bio": "Eshan Manusanka is a filmmaker, marketing enthusiast, and entrepreneur who has spent 9 years living at the intersection of creativity and strategy. Starting at 15, he built his understanding of brands, audiences, and visual storytelling from the ground up, and somewhere between the camera and the boardroom, he decided to build a house where both could live."
   },
   {
     "id": "ffi",
-    "name": "Member 2",
-    "role": "Head of Operations"
+    "name": "Janith Imaduwage",
+    "role": "Filmmaker / Operations",
+    "bio": "Janith Imaduwage is a filmmaker, creative thinker, and the operational force behind The Bricks. From premiering Sri Lanka's first school short film in theatres to crafting scripts and leading teams, he spent years building equal parts creative vision and management precision — and somewhere between the script and the schedule, he became the person who makes sure everything actually happens."
   },
   {
     "id": "marcolp",
-    "name": "Member 3",
-    "role": "Creative Developer"
-  },
-  {
-    "id": "paul",
-    "name": "Member 4",
-    "role": "Motion Designer"
-  },
-  {
-    "id": "andrii",
-    "name": "Member 5",
-    "role": "Art Director"
-  },
-  {
-    "id": "luana",
-    "name": "Member 6",
-    "role": "Designer"
+    "name": "Sasindu Randi",
+    "role": "Actor / Art Direction & Creative",
+    "bio": "Sasindu Randi is an actor, artist, and the creative soul of The Bricks. From school stages to international drama festivals to theatre and streaming, he spent years living inside stories before he started building them. Somewhere between the spotlight and the storyboard, he found a way to bring the art of performance into everything: branding, art direction, and the creative vision that shapes every production."
   }
 ]

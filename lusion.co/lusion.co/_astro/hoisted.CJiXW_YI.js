@@ -24748,23 +24748,22 @@ const _cdnUseLusionDev =
   _cdnHost.endsWith(".firebaseapp.com");
 _cdnUseLusionDev && (CDN_PATH = "https://lusion.dev");
 const PROJECT_ASSET_ALIASES = {
-  brand_anthem_film: "oryzo_ai",
-  product_launch_campaign: "of_the_oak",
-  social_content_series: "devin_ai",
-  documentary_short: "porsche_dream_machine",
-  event_recap_film: "synthetic_human",
-  founder_story: "ddd_2024",
-  commercial_spot: "spaace",
-  recruitment_campaign: "choo_choo_world",
-  testimonial_series: "zero_tech",
-  product_demo_film: "spatial_fusion",
-  behind_the_scenes_content: "worldcoin",
-  case_study_film: "lusion_labs",
-  launch_teaser: "my_little_story_book",
-  culture_campaign: "soda_experience",
-  explainer_film: "infinite_passerella",
-  campaign_toolkit: "the_turn_of_the_screw",
-  brand_story_series: "maxmara_bearings_gifts",
+  hameedia_husn_eid_campaign: "oryzo_ai",
+  cfw_day_2_mikail_hameed: "of_the_oak",
+  fashion_bug_avurudu_2026: "devin_ai",
+  cool_planet_modano_denim: "porsche_dream_machine",
+  eraffine_satin_effect: "synthetic_human",
+  elvoir_valentines_day_campaign: "ddd_2024",
+  jasper_house_surf_lifestyle: "spaace",
+  jasper_house_art_of_surfing_thushan: "choo_choo_world",
+  jasper_house_lina_yoga_journey: "zero_tech",
+  flying_ravana_world_tourism_day_dilum_dissanayake: "spatial_fusion",
+  acres_98_world_tourism_day_thashinthan_panchanathan: "worldcoin",
+  hilton_colombo_oktoberfest_2023: "lusion_labs",
+  taj_samudra_golden_dragon: "my_little_story_book",
+  dandex_confidence_street_interviews: "soda_experience",
+  shandong_crystal_fried_rice: "infinite_passerella",
+  shandong_sweet_sour_chicken: "the_turn_of_the_screw",
 };
 function resolveProjectAssetId(o) {
   return PROJECT_ASSET_ALIASES[o] || o;
@@ -42270,13 +42269,12 @@ class WhoSubsectionTeam {
         "#about-who-team-number-center-item"
       )),
       properties.loader.add(
-        settings.LOCAL_TEAM_PATH + "team.json?v=20260518team",
+        settings.LOCAL_TEAM_PATH + "team.json?v=20260618team",
         {
           onLoad: (t) => {
             t = t.filter((m) => m.id !== "sunny");
             for (let r = 0; r < t.length; r++)
-              (t[r].name = "Member " + (r + 1)),
-                (t[r].index = r),
+              (t[r].index = r),
                 (this.teamDataMap[t[r].id] = t[r]);
             (this.teamDataList = t), this._createUIElements();
           },
@@ -42422,7 +42420,8 @@ class WhoSubsectionTeam {
         1,
         3,
         1 / 30
-      );
+      ),
+      (this.domDescText.textContent = this.teamDataMap[t].bio || "");
   }
   _createUIElements() {
     let e = document.createElement("div");
