@@ -329,10 +329,16 @@ if ($projectIds.Count -gt 0) {
 
 Write-Host "Serving site from: $siteRoot"
 Write-Host "URL: http://localhost:$port/"
+Write-Host "Office: http://localhost:$port/office/"
 
-Push-Location $siteRoot
+$officeServer = Join-Path $workspaceRoot "scripts\bricks-office-server.mjs"
+if (-not (Test-Path $officeServer)) {
+  throw "Office server script not found: $officeServer"
+}
+
+Push-Location $workspaceRoot
 try {
-  py -m http.server $port
+  node $officeServer
 } finally {
   Pop-Location
 }

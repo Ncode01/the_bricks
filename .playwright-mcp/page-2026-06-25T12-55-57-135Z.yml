@@ -1,0 +1,263 @@
+- generic [ref=e13]:
+  - banner [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - paragraph [ref=e17]: "Downloaded UI shell: Tabler"
+        - heading "The Bricks Office" [level=1] [ref=e18]
+      - generic [ref=e19]:
+        - button "Reload" [ref=e20] [cursor=pointer]
+        - button "Save & Rebuild" [active] [ref=e21] [cursor=pointer]
+  - main [ref=e22]:
+    - generic [ref=e23]:
+      - generic [ref=e24]: Edit structured content below, or use the raw JSON tab for full-source changes.
+      - paragraph [ref=e282]: Saved. Site regenerated.
+      - list [ref=e25]:
+        - listitem [ref=e26]:
+          - button "Overview" [ref=e27] [cursor=pointer]
+        - listitem [ref=e28]:
+          - button "Team" [ref=e29] [cursor=pointer]
+        - listitem [ref=e30]:
+          - button "Projects" [ref=e31] [cursor=pointer]
+        - listitem [ref=e32]:
+          - button "Raw JSON" [ref=e33] [cursor=pointer]
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e37]:
+            - heading "Site Overview" [level=2] [ref=e39]
+            - generic [ref=e41]:
+              - generic [ref=e42]: Site description
+              - textbox "Site description" [ref=e43]: The Bricks is a full-service creative production company crafting story-driven films and brand content that connect, inspire, and last.
+          - generic [ref=e45]:
+            - heading "System Lists" [level=2] [ref=e47]
+            - generic [ref=e49]:
+              - generic [ref=e50]: Legacy asset IDs
+              - textbox "Legacy asset IDs" [ref=e51]: oryzo_ai of_the_oak devin_ai porsche_dream_machine synthetic_human ddd_2024 spaace choo_choo_world zero_tech spatial_fusion worldcoin lusion_labs my_little_story_book soda_experience infinite_passerella the_turn_of_the_screw
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - heading "Project Colors" [level=2] [ref=e54]
+            - button "Add Color" [ref=e55] [cursor=pointer]
+          - generic [ref=e57]:
+            - generic [ref=e283]:
+              - generic [ref=e284]:
+                - strong [ref=e285]: Color 1
+                - button "Remove" [ref=e286] [cursor=pointer]
+              - generic [ref=e287]:
+                - generic [ref=e288]:
+                  - generic [ref=e289]: Background
+                  - textbox [ref=e290]: "#2a1f3d"
+                - generic [ref=e291]:
+                  - generic [ref=e292]: Text
+                  - textbox [ref=e293]: "#E2E1FC"
+                - generic [ref=e294]:
+                  - generic [ref=e295]: Shadow
+                  - textbox [ref=e296]: "0.9"
+            - generic [ref=e297]:
+              - generic [ref=e298]:
+                - strong [ref=e299]: Color 2
+                - button "Remove" [ref=e300] [cursor=pointer]
+              - generic [ref=e301]:
+                - generic [ref=e302]:
+                  - generic [ref=e303]: Background
+                  - textbox [ref=e304]: "#3a2d52"
+                - generic [ref=e305]:
+                  - generic [ref=e306]: Text
+                  - textbox [ref=e307]: "#E2E1FC"
+                - generic [ref=e308]:
+                  - generic [ref=e309]: Shadow
+                  - textbox [ref=e310]: "0.9"
+            - generic [ref=e311]:
+              - generic [ref=e312]:
+                - strong [ref=e313]: Color 3
+                - button "Remove" [ref=e314] [cursor=pointer]
+              - generic [ref=e315]:
+                - generic [ref=e316]:
+                  - generic [ref=e317]: Background
+                  - textbox [ref=e318]: "#1a1528"
+                - generic [ref=e319]:
+                  - generic [ref=e320]: Text
+                  - textbox [ref=e321]: "#CB94F7"
+                - generic [ref=e322]:
+                  - generic [ref=e323]: Shadow
+                  - textbox [ref=e324]: "0.9"
+            - generic [ref=e325]:
+              - generic [ref=e326]:
+                - strong [ref=e327]: Color 4
+                - button "Remove" [ref=e328] [cursor=pointer]
+              - generic [ref=e329]:
+                - generic [ref=e330]:
+                  - generic [ref=e331]: Background
+                  - textbox [ref=e332]: "#A76EEE"
+                - generic [ref=e333]:
+                  - generic [ref=e334]: Text
+                  - textbox [ref=e335]: "#0a0810"
+                - generic [ref=e336]:
+                  - generic [ref=e337]: Shadow
+                  - textbox [ref=e338]: "0.95"
+            - generic [ref=e339]:
+              - generic [ref=e340]:
+                - strong [ref=e341]: Color 5
+                - button "Remove" [ref=e342] [cursor=pointer]
+              - generic [ref=e343]:
+                - generic [ref=e344]:
+                  - generic [ref=e345]: Background
+                  - textbox [ref=e346]: "#CB94F7"
+                - generic [ref=e347]:
+                  - generic [ref=e348]: Text
+                  - textbox [ref=e349]: "#0a0810"
+                - generic [ref=e350]:
+                  - generic [ref=e351]: Shadow
+                  - textbox [ref=e352]: "0.95"
+            - generic [ref=e353]:
+              - generic [ref=e354]:
+                - strong [ref=e355]: Color 6
+                - button "Remove" [ref=e356] [cursor=pointer]
+              - generic [ref=e357]:
+                - generic [ref=e358]:
+                  - generic [ref=e359]: Background
+                  - textbox [ref=e360]: "#E2E1FC"
+                - generic [ref=e361]:
+                  - generic [ref=e362]: Text
+                  - textbox [ref=e363]: "#0a0810"
+                - generic [ref=e364]:
+                  - generic [ref=e365]: Shadow
+                  - textbox [ref=e366]: "0.95"
+            - generic [ref=e367]:
+              - generic [ref=e368]:
+                - strong [ref=e369]: Color 7
+                - button "Remove" [ref=e370] [cursor=pointer]
+              - generic [ref=e371]:
+                - generic [ref=e372]:
+                  - generic [ref=e373]: Background
+                  - textbox [ref=e374]: "#7d52c9"
+                - generic [ref=e375]:
+                  - generic [ref=e376]: Text
+                  - textbox [ref=e377]: "#E2E1FC"
+                - generic [ref=e378]:
+                  - generic [ref=e379]: Shadow
+                  - textbox [ref=e380]: "0.85"
+            - generic [ref=e381]:
+              - generic [ref=e382]:
+                - strong [ref=e383]: Color 8
+                - button "Remove" [ref=e384] [cursor=pointer]
+              - generic [ref=e385]:
+                - generic [ref=e386]:
+                  - generic [ref=e387]: Background
+                  - textbox [ref=e388]: "#4a3566"
+                - generic [ref=e389]:
+                  - generic [ref=e390]: Text
+                  - textbox [ref=e391]: "#E2E1FC"
+                - generic [ref=e392]:
+                  - generic [ref=e393]: Shadow
+                  - textbox [ref=e394]: "0.95"
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - strong [ref=e397]: Color 9
+                - button "Remove" [ref=e398] [cursor=pointer]
+              - generic [ref=e399]:
+                - generic [ref=e400]:
+                  - generic [ref=e401]: Background
+                  - textbox [ref=e402]: "#d4d3ee"
+                - generic [ref=e403]:
+                  - generic [ref=e404]: Text
+                  - textbox [ref=e405]: "#0a0810"
+                - generic [ref=e406]:
+                  - generic [ref=e407]: Shadow
+                  - textbox [ref=e408]: "0.9"
+            - generic [ref=e409]:
+              - generic [ref=e410]:
+                - strong [ref=e411]: Color 10
+                - button "Remove" [ref=e412] [cursor=pointer]
+              - generic [ref=e413]:
+                - generic [ref=e414]:
+                  - generic [ref=e415]: Background
+                  - textbox [ref=e416]: "#2a2438"
+                - generic [ref=e417]:
+                  - generic [ref=e418]: Text
+                  - textbox [ref=e419]: "#CB94F7"
+                - generic [ref=e420]:
+                  - generic [ref=e421]: Shadow
+                  - textbox [ref=e422]: "0.95"
+            - generic [ref=e423]:
+              - generic [ref=e424]:
+                - strong [ref=e425]: Color 11
+                - button "Remove" [ref=e426] [cursor=pointer]
+              - generic [ref=e427]:
+                - generic [ref=e428]:
+                  - generic [ref=e429]: Background
+                  - textbox [ref=e430]: "#5c4580"
+                - generic [ref=e431]:
+                  - generic [ref=e432]: Text
+                  - textbox [ref=e433]: "#E2E1FC"
+                - generic [ref=e434]:
+                  - generic [ref=e435]: Shadow
+                  - textbox [ref=e436]: "0.975"
+            - generic [ref=e437]:
+              - generic [ref=e438]:
+                - strong [ref=e439]: Color 12
+                - button "Remove" [ref=e440] [cursor=pointer]
+              - generic [ref=e441]:
+                - generic [ref=e442]:
+                  - generic [ref=e443]: Background
+                  - textbox [ref=e444]: "#3d2f55"
+                - generic [ref=e445]:
+                  - generic [ref=e446]: Text
+                  - textbox [ref=e447]: "#E2E1FC"
+                - generic [ref=e448]:
+                  - generic [ref=e449]: Shadow
+                  - textbox [ref=e450]: "0.85"
+            - generic [ref=e451]:
+              - generic [ref=e452]:
+                - strong [ref=e453]: Color 13
+                - button "Remove" [ref=e454] [cursor=pointer]
+              - generic [ref=e455]:
+                - generic [ref=e456]:
+                  - generic [ref=e457]: Background
+                  - textbox [ref=e458]: "#1e1a2e"
+                - generic [ref=e459]:
+                  - generic [ref=e460]: Text
+                  - textbox [ref=e461]: "#E2E1FC"
+                - generic [ref=e462]:
+                  - generic [ref=e463]: Shadow
+                  - textbox [ref=e464]: "0.95"
+            - generic [ref=e465]:
+              - generic [ref=e466]:
+                - strong [ref=e467]: Color 14
+                - button "Remove" [ref=e468] [cursor=pointer]
+              - generic [ref=e469]:
+                - generic [ref=e470]:
+                  - generic [ref=e471]: Background
+                  - textbox [ref=e472]: "#2a1f3d"
+                - generic [ref=e473]:
+                  - generic [ref=e474]: Text
+                  - textbox [ref=e475]: "#CB94F7"
+                - generic [ref=e476]:
+                  - generic [ref=e477]: Shadow
+                  - textbox [ref=e478]: "0.95"
+            - generic [ref=e479]:
+              - generic [ref=e480]:
+                - strong [ref=e481]: Color 15
+                - button "Remove" [ref=e482] [cursor=pointer]
+              - generic [ref=e483]:
+                - generic [ref=e484]:
+                  - generic [ref=e485]: Background
+                  - textbox [ref=e486]: "#A76EEE"
+                - generic [ref=e487]:
+                  - generic [ref=e488]: Text
+                  - textbox [ref=e489]: "#ffffff"
+                - generic [ref=e490]:
+                  - generic [ref=e491]: Shadow
+                  - textbox [ref=e492]: "0.9"
+            - generic [ref=e493]:
+              - generic [ref=e494]:
+                - strong [ref=e495]: Color 16
+                - button "Remove" [ref=e496] [cursor=pointer]
+              - generic [ref=e497]:
+                - generic [ref=e498]:
+                  - generic [ref=e499]: Background
+                  - textbox [ref=e500]: "#CB94F7"
+                - generic [ref=e501]:
+                  - generic [ref=e502]: Text
+                  - textbox [ref=e503]: "#2a1f3d"
+                - generic [ref=e504]:
+                  - generic [ref=e505]: Shadow
+                  - textbox [ref=e506]: "0.85"

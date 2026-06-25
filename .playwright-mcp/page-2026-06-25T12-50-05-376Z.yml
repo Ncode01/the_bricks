@@ -1,0 +1,206 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner:
+      - generic:
+        - link "Go to home page" [ref=e4] [cursor=pointer]:
+          - /url: /
+          - img "The Bricks" [ref=e5]
+        - generic:
+          - button "Back":
+            - img
+            - paragraph: back
+            - img
+        - generic:
+          - button [ref=e6] [cursor=pointer]
+          - button "Contact us" [ref=e8] [cursor=pointer]:
+            - link [ref=e9]:
+              - /url: mailto:hello@thebricks.lk
+            - generic [ref=e10]:
+              - img [ref=e12]
+              - generic [ref=e14]: Contact us
+          - button "Menu button" [ref=e17] [cursor=pointer]:
+            - generic [ref=e18]:
+              - generic [ref=e19]: Menu
+              - generic [ref=e20]: Close
+    - generic [ref=e24]:
+      - generic [ref=e27]:
+        - generic [ref=e29]:
+          - heading "PROJECTS" [level=4] [ref=e30]
+          - generic [ref=e31]: "16"
+          - img [ref=e32]
+        - generic [ref=e34]:
+          - link "production â€¢ editing â€¢ colour grading Hameedia Eid Campaign" [ref=e35] [cursor=pointer]:
+            - /url: /showcase/hameedia_husn_eid_campaign/
+            - generic [ref=e38]:
+              - generic [ref=e39]: production â€¢ editing â€¢ colour grading
+              - generic [ref=e42]: Hameedia Eid Campaign
+          - link "production â€¢ editing â€¢ color grading CFW Day2 | Mikail Hameed - High Fashion Runway Film" [ref=e43] [cursor=pointer]:
+            - /url: /showcase/cfw_day_2_mikail_hameed/
+            - generic [ref=e46]:
+              - generic [ref=e47]: production â€¢ editing â€¢ color grading
+              - generic [ref=e50]: CFW Day2 | Mikail Hameed - High Fashion Runway Film
+          - link "lighting â€¢ production â€¢ editing â€¢ color grading Fashion Bug | Sinhala&Tamil New Year Campaign2026" [ref=e51] [cursor=pointer]:
+            - /url: /showcase/fashion_bug_avurudu_2026/
+            - generic [ref=e54]:
+              - generic [ref=e55]: lighting â€¢ production â€¢ editing â€¢ color grading
+              - generic [ref=e58]: Fashion Bug | Sinhala&Tamil New Year Campaign2026
+          - link "production Cool Planet | Modano Denim Collection" [ref=e59] [cursor=pointer]:
+            - /url: /showcase/cool_planet_modano_denim/
+            - generic [ref=e62]:
+              - generic [ref=e63]: production
+              - generic [ref=e66]: Cool Planet | Modano Denim Collection
+          - link "post production e RaffinÃ©by Sage&Olive | The Satin Effect" [ref=e67] [cursor=pointer]:
+            - /url: /showcase/eraffine_satin_effect/
+            - generic [ref=e70]:
+              - generic [ref=e71]: post production
+              - generic [ref=e74]: e RaffinÃ©by Sage&Olive | The Satin Effect
+          - link "editing Elvoir | Valentine's Day Campaign" [ref=e75] [cursor=pointer]:
+            - /url: /showcase/elvoir_valentines_day_campaign/
+            - generic [ref=e78]:
+              - generic [ref=e79]: editing
+              - generic [ref=e82]: Elvoir | Valentine's Day Campaign
+          - link "production Jasper House Hiriketiya | Surf&Lifestyle Commercial" [ref=e83] [cursor=pointer]:
+            - /url: /showcase/jasper_house_surf_lifestyle/
+            - generic [ref=e86]:
+              - generic [ref=e87]: production
+              - generic [ref=e90]: Jasper House Hiriketiya | Surf&Lifestyle Commercial
+          - link "production Jasper House Hiriketiya | The Artof Surfingwith Thushan" [ref=e91] [cursor=pointer]:
+            - /url: /showcase/jasper_house_art_of_surfing_thushan/
+            - generic [ref=e94]:
+              - generic [ref=e95]: production
+              - generic [ref=e98]: Jasper House Hiriketiya | The Artof Surfingwith Thushan
+          - link "production Jasper House Hiriketiya | Finding Balance:Lina's Yoga Journey" [ref=e99] [cursor=pointer]:
+            - /url: /showcase/jasper_house_lina_yoga_journey/
+            - generic [ref=e102]:
+              - generic [ref=e103]: production
+              - generic [ref=e106]: Jasper House Hiriketiya | Finding Balance:Lina's Yoga Journey
+          - link "production â€¢ editing â€¢ color grading Flying Ravanax Vella Group | World Tourism Daywith Dilum Dissanayake" [ref=e107] [cursor=pointer]:
+            - /url: /showcase/flying_ravana_world_tourism_day_dilum_dissanayake/
+            - generic [ref=e110]:
+              - generic [ref=e111]: production â€¢ editing â€¢ color grading
+              - generic [ref=e114]: Flying Ravanax Vella Group | World Tourism Daywith Dilum Dissanayake
+          - link "production â€¢ editing â€¢ color grading 98 Acresx Vella Group | World Tourism Daywith Thashinthan Panchanathan" [ref=e115] [cursor=pointer]:
+            - /url: /showcase/acres_98_world_tourism_day_thashinthan_panchanathan/
+            - generic [ref=e118]:
+              - generic [ref=e119]: production â€¢ editing â€¢ color grading
+              - generic [ref=e122]: 98 Acresx Vella Group | World Tourism Daywith Thashinthan Panchanathan
+          - link "cinematography â€¢ event production Hilton Colombo Oktoberfest2023 | The Ultimate Bavarian Pour" [ref=e123] [cursor=pointer]:
+            - /url: /showcase/hilton_colombo_oktoberfest_2023/
+            - generic [ref=e126]:
+              - generic [ref=e127]: cinematography â€¢ event production
+              - generic [ref=e130]: Hilton Colombo Oktoberfest2023 | The Ultimate Bavarian Pour
+          - link "cinematography â€¢ video editing Taj Samudra | Golden Dragon:Fire,Spice&Fine Dining" [ref=e131] [cursor=pointer]:
+            - /url: /showcase/taj_samudra_golden_dragon/
+            - generic [ref=e134]:
+              - generic [ref=e135]: cinematography â€¢ video editing
+              - generic [ref=e138]: Taj Samudra | Golden Dragon:Fire,Spice&Fine Dining
+          - link "production Dandex | Confidence Street Interviews" [ref=e139] [cursor=pointer]:
+            - /url: /showcase/dandex_confidence_street_interviews/
+            - generic [ref=e142]:
+              - generic [ref=e143]: production
+              - generic [ref=e146]: Dandex | Confidence Street Interviews
+          - link "lighting â€¢ production â€¢ editing Shandong The Chinese Kitchen | Cinematic Crystal Fried Rice" [ref=e147] [cursor=pointer]:
+            - /url: /showcase/shandong_crystal_fried_rice/
+            - generic [ref=e150]:
+              - generic [ref=e151]: lighting â€¢ production â€¢ editing
+              - generic [ref=e154]: Shandong The Chinese Kitchen | Cinematic Crystal Fried Rice
+          - link "lighting â€¢ production â€¢ editing Shandong Chinese Kitchen | Sweet,Sour&Totally Cinematic" [ref=e155] [cursor=pointer]:
+            - /url: /showcase/shandong_sweet_sour_chicken/
+            - generic [ref=e158]:
+              - generic [ref=e159]: lighting â€¢ production â€¢ editing
+              - generic [ref=e162]: Shandong Chinese Kitchen | Sweet,Sour&Totally Cinematic
+      - generic [ref=e163]:
+        - link "Let's work together!" [ref=e168] [cursor=pointer]:
+          - /url: mailto:hello@thebricks.lk
+          - text: Let's work
+          - text: together!
+        - generic [ref=e169]:
+          - generic [ref=e172]:
+            - generic [ref=e173]:
+              - link "The Bricks Creative production house hello@thebricks.lk" [ref=e174] [cursor=pointer]:
+                - /url: mailto:hello@thebricks.lk
+                - generic [ref=e176]:
+                  - generic [ref=e177]: The
+                  - generic [ref=e178]: Bricks
+                - generic [ref=e180]:
+                  - generic [ref=e181]: Creative
+                  - generic [ref=e182]: production
+                  - generic [ref=e183]: house
+                - generic [ref=e186]: hello@thebricks.lk
+              - generic [ref=e187]:
+                - link "YouTube" [ref=e189] [cursor=pointer]:
+                  - /url: https://www.youtube.com/@TheBrickslk
+                  - img [ref=e190]
+                  - generic [ref=e193]: YouTube
+                - link "Instagram" [ref=e195] [cursor=pointer]:
+                  - /url: https://www.instagram.com/thebrickslk/
+                  - img [ref=e196]
+                  - generic [ref=e199]: Instagram
+                - link "Facebook" [ref=e201] [cursor=pointer]:
+                  - /url: https://www.facebook.com/thebrickslk
+                  - img [ref=e202]
+                  - generic [ref=e205]: Facebook
+              - generic [ref=e206]:
+                - generic [ref=e208]:
+                  - generic [ref=e209]: General
+                  - generic [ref=e210]: enquiries
+                - link "hello@thebricks.lk" [ref=e212] [cursor=pointer]:
+                  - /url: mailto:hello@thebricks.lk
+                  - generic [ref=e213]: hello@thebricks.lk
+              - generic [ref=e214]:
+                - generic [ref=e216]:
+                  - generic [ref=e217]: New
+                  - generic [ref=e218]: business
+                - link "hello@thebricks.lk" [ref=e220] [cursor=pointer]:
+                  - /url: mailto:hello@thebricks.lk
+                  - generic [ref=e221]: hello@thebricks.lk
+            - generic [ref=e222]:
+              - generic [ref=e223]:
+                - generic [ref=e226]: Contact
+                - generic [ref=e229]: us
+              - generic [ref=e232]:
+                - textbox "Your email" [ref=e233]
+                - button "Contact us" [ref=e234] [cursor=pointer]:
+                  - img [ref=e235]
+          - generic [ref=e237]:
+            - generic [ref=e238]:
+              - generic [ref=e239]: Â©2026
+              - generic [ref=e240]: The
+              - generic [ref=e241]: Bricks
+              - generic [ref=e242]: Creative
+              - generic [ref=e243]: (Pvt)
+              - generic [ref=e244]: Ltd
+            - link "Production / The Bricks" [ref=e245] [cursor=pointer]:
+              - /url: https://www.instagram.com/thebrickslk/
+              - generic [ref=e246]: Production
+              - generic [ref=e247]: /
+              - generic [ref=e248]: The
+              - generic [ref=e249]: Bricks
+            - generic [ref=e250]:
+              - generic [ref=e251]: Built
+              - generic [ref=e252]: by
+              - generic [ref=e253]: Nadula
+              - generic [ref=e254]: with
+              - generic [ref=e255]: "â™¥ï¸\x8f"
+            - generic [ref=e256] [cursor=pointer]:
+              - img [ref=e257]
+              - img [ref=e259]
+        - generic [ref=e262]:
+          - generic [ref=e263]:
+            - text: Keep Scrolling
+            - text: to Learn More
+          - generic [ref=e264]:
+            - generic [ref=e265]: About Us
+            - generic [ref=e266]:
+              - generic [ref=e267]: Next Page
+              - img [ref=e271]
+  - generic [ref=e283]:
+    - generic [ref=e284]:
+      - generic [ref=e285]: "0"
+      - generic [ref=e286]: "0"
+    - generic [ref=e287]:
+      - generic [ref=e288]: "0"
+      - generic [ref=e289]: "0"
+    - generic [ref=e290]:
+      - generic [ref=e291]: "1"
+      - generic [ref=e292]: "2"

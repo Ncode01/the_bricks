@@ -1,12 +1,20 @@
 {
   "name": "scripts",
   "version": "1.0.0",
-  "description": "",
+  "description": "The Bricks local CMS and site scripts",
   "main": "index.js",
   "scripts": {
+    "apply:bricks": "node apply-bricks-content-update.mjs",
+    "generate:content": "node generate-bricks-content-data.mjs",
+    "generate:showcase": "node generate-showcase-pages.mjs",
+    "office": "node bricks-office-server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@tabler/core": "^1.4.0",
+    "express": "^5.2.1"
+  }
 }

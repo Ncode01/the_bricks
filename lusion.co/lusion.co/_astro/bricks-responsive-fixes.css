@@ -63,6 +63,57 @@ svg {
   display: none;
 }
 
+#header-menu {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+#header-menu.--opened {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.project-item-footer {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.project-item-line-2 {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.65rem;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  line-height: 1.02 !important;
+  left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.project-item-line-2-icon {
+  position: relative !important;
+  flex: 0 0 auto;
+  top: 0.18em !important;
+  left: 0 !important;
+  transform: none !important;
+  width: 0.7em !important;
+  height: 0.7em !important;
+  margin-right: 0.1rem;
+}
+
+.project-item-line-2-inner {
+  display: block !important;
+  position: static !important;
+  bottom: auto !important;
+  flex: 1 1 auto;
+  overflow: visible !important;
+  white-space: normal !important;
+  padding-left: 0 !important;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
 @media (max-width: 812px) {
   :root {
     --base-padding-x: clamp(1rem, 5vw, 1.35rem);
@@ -114,10 +165,35 @@ svg {
 
   #header-menu-links {
     width: 100%;
+    padding: 0.4rem !important;
+    border-radius: 1rem !important;
   }
 
   .header-menu-link {
-    font-size: clamp(2rem, 12vw, 4rem);
+    font-size: 1rem !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  #header-menu {
+    top: calc(100% + 0.6rem) !important;
+    right: 0 !important;
+    width: min(18rem, calc(100vw - 1rem)) !important;
+    max-height: min(22rem, calc(100dvh - 6rem)) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    z-index: 40;
+  }
+
+  .header-menu-link-text,
+  .header-menu-link-text-clone {
+    font-size: 1rem !important;
+  }
+
+  .header-menu-link-svg {
+    width: 1rem !important;
+    height: 1rem !important;
+    top: calc(50% - 0.5rem) !important;
+    transform: scale(1) !important;
   }
 
   /* About page */
@@ -131,7 +207,8 @@ svg {
   }
 
   #about-who {
-    padding-top: 5.5rem;
+    display: none !important;
+    padding-top: 0 !important;
   }
 
   .about-who-subsection {
@@ -201,8 +278,8 @@ svg {
   }
 
   #about-who-subsection-team {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    display: none !important;
+    padding: 0 !important;
   }
 
   #about-who-team {
@@ -214,7 +291,15 @@ svg {
     grid-template-columns: 1fr;
     gap: 1rem;
     width: 100%;
-    padding: 0 var(--base-padding-x) 3rem;
+    padding: 6rem var(--base-padding-x) 3rem;
+  }
+
+  .about-team-roster-title {
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
   }
 
   .about-team-roster article {
@@ -235,6 +320,10 @@ svg {
     font-size: clamp(0.95rem, 3.8vw, 1.1rem);
     line-height: 1.6;
     margin: 0.5rem 0 0;
+  }
+
+  .about-award-header-number {
+    display: none !important;
   }
 
   #about-how,
@@ -313,6 +402,10 @@ svg {
     font-size: clamp(1rem, 5vw, 1.35rem) !important;
     line-height: 1.15 !important;
     overflow-wrap: anywhere;
+  }
+
+  .project-item-line-2 {
+    gap: 0.85rem;
   }
 
   /* Project detail */

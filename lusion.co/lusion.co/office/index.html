@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Bricks Office</title>
+    <link rel="stylesheet" href="/office/vendor/css/tabler.min.css" />
+    <link rel="stylesheet" href="/office/office.css" />
+  </head>
+  <body>
+    <div class="page office-page">
+      <div class="office-auth" id="office-auth">
+        <div class="card office-auth-card">
+          <div class="card-body">
+            <p class="office-kicker">The Bricks Office</p>
+            <h1 class="office-title">Content CMS</h1>
+            <p class="text-secondary">MVP login with a hardcoded local admin password.</p>
+            <div class="mb-3">
+              <label class="form-label" for="office-password">Admin password</label>
+              <input class="form-control" id="office-password" type="password" autocomplete="current-password" />
+            </div>
+            <button class="btn btn-primary w-100" id="office-login" type="button">Enter Office</button>
+            <p class="office-status" id="office-login-status"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="office-shell d-none" id="office-shell">
+        <header class="navbar navbar-expand-md office-header">
+          <div class="container-xl">
+            <div>
+              <p class="office-kicker mb-1">Downloaded UI shell: Tabler</p>
+              <h1 class="navbar-brand navbar-brand-autodark m-0">The Bricks Office</h1>
+            </div>
+            <div class="office-actions">
+              <button class="btn btn-outline-light" id="office-refresh" type="button">Reload</button>
+              <button class="btn btn-primary" id="office-save" type="button">Save & Rebuild</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="page-wrapper">
+          <div class="container-xl py-4">
+            <div class="alert alert-info office-banner">
+              Edit structured content below, or use the raw JSON tab for full-source changes.
+            </div>
+            <p class="office-status" id="office-save-status"></p>
+
+            <ul class="nav nav-tabs office-tabs" id="office-tabs">
+              <li class="nav-item"><button class="nav-link active" data-tab="overview" type="button">Overview</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab="team" type="button">Team</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab="projects" type="button">Projects</button></li>
+              <li class="nav-item"><button class="nav-link" data-tab="json" type="button">Raw JSON</button></li>
+            </ul>
+
+            <section class="office-panel" data-panel="overview">
+              <div class="row g-4">
+                <div class="col-12 col-lg-7">
+                  <div class="card">
+                    <div class="card-header"><h2 class="card-title">Site Overview</h2></div>
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <label class="form-label" for="site-description">Site description</label>
+                        <textarea class="form-control" id="site-description" rows="5"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                  <div class="card">
+                    <div class="card-header"><h2 class="card-title">System Lists</h2></div>
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <label class="form-label" for="legacy-asset-ids">Legacy asset IDs</label>
+                        <textarea class="form-control" id="legacy-asset-ids" rows="7"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h2 class="card-title">Project Colors</h2>
+                  <button class="btn btn-sm btn-outline-primary" id="add-color" type="button">Add Color</button>
+                </div>
+                <div class="card-body">
+                  <div class="office-collection" id="colors-list"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="office-panel d-none" data-panel="team">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h2 class="card-title">Team Members</h2>
+                  <button class="btn btn-sm btn-outline-primary" id="add-team-member" type="button">Add Member</button>
+                </div>
+                <div class="card-body">
+                  <div class="office-collection" id="team-list"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="office-panel d-none" data-panel="projects">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h2 class="card-title">Projects</h2>
+                  <button class="btn btn-sm btn-outline-primary" id="add-project" type="button">Add Project</button>
+                </div>
+                <div class="card-body">
+                  <div class="office-collection" id="projects-list"></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="office-panel d-none" data-panel="json">
+              <div class="card">
+                <div class="card-header"><h2 class="card-title">Raw JSON Source</h2></div>
+                <div class="card-body">
+                  <textarea class="form-control office-json" id="raw-json"></textarea>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/office/vendor/js/tabler.min.js"></script>
+    <script src="/office/office.js"></script>
+  </body>
+</html>

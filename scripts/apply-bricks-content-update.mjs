@@ -58,15 +58,27 @@ function projectCard(project, index) {
   const c = BRICKS_COLORS[index % BRICKS_COLORS.length];
   const title = project.cardTitle || project.title;
   const tag = servicesTag(project.services);
+  const firstVideo = project.videoUrls?.[0] || "";
+  const thumbIdMatch = firstVideo.match(/(?:youtu\.be\/|youtube\.com\/(?:shorts\/|watch\?v=))([^?&/]+)/i);
+  const thumbId = thumbIdMatch ? thumbIdMatch[1] : "";
+  const mediaHtml = thumbId
+    ? `<div
+                    class="project-item-image project-youtube-thumbnail"
+                    style="background-image: url('https://img.youtube.com/vi/${thumbId}/hqdefault.jpg');"
+                    data-thumb-id="${thumbId}"
+                    aria-hidden="true"
+                  ></div>`
+    : `<div class="project-item-image project-youtube-thumbnail project-thumbnail-placeholder" aria-hidden="true"></div>`;
   return `<a
                   class="project-item project-type-website"
-                  href="/projects/${project.slug}"
+                  href="/showcase/${project.slug}/"
                   data-id="${project.slug}"
                    data-color-bg="${c.bg}" data-color-text="${c.text}"
                   data-color-shadow="${c.shadow}"
+                 data-link-type="regular"
                 >
                   <div class="project-item-main">
-                    <div class="project-item-image"></div>
+                    ${mediaHtml}
                   </div>
                   <div class="project-item-footer">
                     <div class="project-item-line-1">
@@ -281,18 +293,14 @@ function updateProjectLists() {
       `<span id="projects-main-title-project-number">${PROJECTS.length}</span>`
     );
     if (rel === "index.html") {
-      html = replaceBetween(
-        html,
-        '<div class="project-list">',
-        '<a id="home-featured-cta"',
-        `${featuredCards}\n              </div>\n              `
+      html = html.replace(
+        /<div class="project-list">[\s\S]*?<\/div>\s*(?=<a id="home-featured-cta")/,
+        `<div class="project-list">${featuredCards}</div>\n              `
       );
     } else {
-      html = replaceBetween(
-        html,
-        '<div class="project-list">',
-        '</div>\n            </div>\n          </div>\n        </div>\n        <div id="page-extra-sections">',
-        allCards
+      html = html.replace(
+        /<div class="project-list">[\s\S]*?<\/div>\s*(?=<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<div id="page-extra-sections">)/,
+        `<div class="project-list">${allCards}</div>\n            `
       );
     }
     writeIfChanged(filePath, html);
@@ -519,6 +527,15 @@ function updateAboutPage() {
       "</div>\n            </div>\n            <div id=\"about-clients\"",
       `</div>\n            </div>\n            <div id="about-team-roster" hidden>\n                ${teamRosterSeo}\n            </div>\n            <div id="about-clients"`
     );
+  } else if (html.includes('<div id="about-team-roster" class="about-team-roster"')) {
+    html = html.replace(
+      /<div id="about-team-roster" class="about-team-roster"[\s\S]*?<\/div>\s*<div id="about-clients"/,
+      `<div id="about-team-roster" class="about-team-roster" aria-label="Team roster">
+                <h2 class="about-team-roster-title">Team Members</h2>
+                ${teamRosterSeo}
+            </div>
+            <div id="about-clients"`
+    );
   } else {
     html = html.replace(
       /<div id="about-team-roster" hidden>[\s\S]*?<\/div>\s*<div id="about-clients"/,
@@ -592,11 +609,9 @@ function updateAboutPage() {
                 ${processHtml}
               </div>
               `;
-  html = replaceBetween(
-    html,
-    '<div class="about-award-category award-category-awards">',
-    '<div class="about-award-category award-category-articles">',
-    processSectionInner
+  html = html.replace(
+    /<div class="about-award-category award-category-awards">[\s\S]*?(?=<svg[\s\S]*?id="about-award-title")/,
+    `<div class="about-award-category award-category-awards">${processSectionInner}`
   );
 
   html = html.replace(
@@ -652,11 +667,16 @@ function updateAboutPage() {
               </div>
               `
   );
-  html = replaceBetween(
-    html,
-    '<div id="about-capability-cards">',
-    '</div>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div id="page-extra-sections">',
-    `\n                  ${expertiseCards}\n                `
+  html = html.replace(
+    /<div id="about-capability-cards">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*(?=<div id="page-extra-sections">)/,
+    `<div id="about-capability-cards">
+                  ${expertiseCards}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `
   );
 
   writeIfChanged(filePath, html);

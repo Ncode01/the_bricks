@@ -1,0 +1,9 @@
+- generic [ref=e5]:
+  - paragraph [ref=e6]: The Bricks Office
+  - heading "Content CMS" [level=1] [ref=e7]
+  - paragraph [ref=e8]: MVP login with a hardcoded local admin password.
+  - generic [ref=e9]:
+    - generic [ref=e10]: Admin password
+    - textbox "Admin password" [ref=e11]
+  - button "Enter Office" [ref=e12] [cursor=pointer]
+  - paragraph
