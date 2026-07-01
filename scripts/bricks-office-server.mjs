@@ -91,6 +91,18 @@ app.get("/office/office.css", (_req, res) => {
 app.get("/office/office.js", (_req, res) => {
   res.sendFile(path.join(SITE, "office", "office.js"));
 });
+app.get("/about", (_req, res) => {
+  res.sendFile(path.join(SITE, "about", "index.html"));
+});
+app.get("/about/", (_req, res) => {
+  res.sendFile(path.join(SITE, "about", "index.html"));
+});
+app.get("/projects", (_req, res) => {
+  res.sendFile(path.join(SITE, "projects", "index.html"));
+});
+app.get("/projects/", (_req, res) => {
+  res.sendFile(path.join(SITE, "projects", "index.html"));
+});
 
 app.use(
   "/office/vendor",

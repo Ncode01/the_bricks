@@ -1,0 +1,326 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner:
+      - generic:
+        - link "Go to home page" [ref=e3] [cursor=pointer]:
+          - /url: /
+          - img "The Bricks" [ref=e4]
+        - generic:
+          - button "Back":
+            - img
+            - paragraph: back
+            - img
+        - generic:
+          - button [ref=e5] [cursor=pointer]
+          - button "Contact us":
+            - link:
+              - /url: mailto:hello@thebricks.lk
+            - generic:
+              - generic:
+                - img
+              - generic: Contact us
+          - button "Menu button":
+            - generic:
+              - generic: Menu
+              - generic: Close
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e11]:
+            - generic [ref=e18]:
+              - generic [ref=e19]:
+                - img
+                - generic [ref=e20]: SCROLL TO EXPLORE
+              - generic [ref=e21]:
+                - generic [ref=e22]: WE ARE
+                - generic [ref=e23]: AN IMPACT-DRIVEN
+                - generic [ref=e24]:
+                  - generic [ref=e25]: VIDEO
+                  - generic [ref=e26]: PRODUCTION COMPANY
+              - generic [ref=e27]:
+                - generic [ref=e28]: CRAFTING PRODUCTIONS
+                - generic [ref=e29]: THAT CREATE LASTING IMPACT
+            - generic [ref=e30]:
+              - generic [ref=e31]: We plan it, shoot it, perfect it.
+              - generic [ref=e32]: We're storytellers, strategists, and filmmakers. A creative production house built to turn bold ideas into lasting impact.
+            - generic [ref=e34]:
+              - generic [ref=e37]:
+                - generic [ref=e38]:
+                  - generic [ref=e39]: "[["
+                  - generic [ref=e41]: "001"
+                  - generic [ref=e42]: "]]"
+                - generic [ref=e43]:
+                  - generic [ref=e44]:
+                    - img [ref=e45]
+                    - generic [ref=e47]: Eshan Manusanka
+                  - generic [ref=e48]: Filmmaker / Strategy & Marketing
+              - generic [ref=e56]:
+                - heading "TEAM" [level=2] [ref=e57]
+                - paragraph [ref=e59]: Eshan Manusanka is a filmmaker, marketing enthusiast, and entrepreneur who has spent 9 years living at the intersection of creativity and strategy. Starting at 15, he built his understanding of brands, audiences, and visual storytelling from the ground up, and somewhere between the camera and the boardroom, he decided to build a house where both could live.
+              - generic:
+                - img
+          - generic [ref=e60]:
+            - generic [ref=e61]:
+              - generic [ref=e62]:
+                - heading "How We Work" [level=5] [ref=e63]
+                - generic [ref=e64]:
+                  - img [ref=e65]
+                  - paragraph [ref=e69]: "05"
+              - generic [ref=e71]:
+                - paragraph [ref=e72]: 01 — Discover
+                - paragraph [ref=e73]: We get to know you.
+                - paragraph [ref=e74]: We dig into your brand, your audience, and what you actually want to achieve. No assumptions. Just the right questions, asked early.
+                - paragraph [ref=e75]: We sit down and define the brief together
+                - paragraph [ref=e76]: We identify your audience and key message
+                - paragraph [ref=e77]: We align on objectives, timelines, and deliverables
+                - paragraph: We find the creative opportunity hiding in the brief
+              - generic [ref=e80]:
+                - paragraph [ref=e81]: 02 — Develop
+                - paragraph [ref=e82]: We build the idea.
+                - paragraph [ref=e83]: This is where the concept comes to life — scripts, treatments, shot lists, locations, talent. Everything planned so nothing is left to chance on shoot day.
+                - paragraph [ref=e84]: We develop the creative concept and direction
+                - paragraph [ref=e85]: We write the script, treatment, and storyboard
+                - paragraph [ref=e86]: We plan locations, talent, and logistics
+                - paragraph: We present the creative and refine until it's right
+              - generic [ref=e89]:
+                - paragraph [ref=e90]: 03 — Produce
+                - paragraph [ref=e91]: We show up and shoot.
+                - paragraph [ref=e92]: Full in-house crew. Full creative control. We handle everything on set so you don't have to worry about a thing — just watch it come to life.
+                - paragraph [ref=e93]: We execute the shoot with our full in-house team
+                - paragraph [ref=e94]: We direct, frame, and capture with intention
+                - paragraph [ref=e95]: We maintain creative consistency across every shot
+                - paragraph: We manage the set so every minute counts
+              - generic [ref=e98]:
+                - paragraph [ref=e99]: 04 — Refine
+                - paragraph [ref=e100]: We make it great.
+                - paragraph [ref=e101]: Edit. Colour. Sound. Motion. We go through every frame until it feels exactly right. Good enough isn't in our vocabulary.
+                - paragraph [ref=e102]: We edit and shape the narrative
+                - paragraph [ref=e103]: We apply colour grading and motion graphics
+                - paragraph [ref=e104]: We mix and design the sound
+                - paragraph: We review, refine, and incorporate your feedback
+              - generic [ref=e107]:
+                - paragraph [ref=e108]: 05 — Deliver
+                - paragraph [ref=e109]: We send it into the world.
+                - paragraph [ref=e110]: Final assets, optimised for every platform you need. Clean. On time. Ready to make an impact.
+                - paragraph [ref=e111]: We export and optimise for every platform
+                - paragraph [ref=e112]: We deliver with full quality assurance
+                - paragraph [ref=e113]: We analyse content performance and share insights
+                - paragraph: We stay available for whatever comes next
+            - img [ref=e115]
+            - paragraph [ref=e119]: "05"
+        - generic [ref=e121]:
+          - paragraph [ref=e122]: 01 — Discover
+          - paragraph [ref=e123]: We get to know you.
+          - paragraph [ref=e124]: We dig into your brand, your audience, and what you actually want to achieve. No assumptions. Just the right questions, asked early.
+          - paragraph [ref=e125]: We sit down and define the brief together
+          - paragraph [ref=e126]: We identify your audience and key message
+          - paragraph [ref=e127]: We align on objectives, timelines, and deliverables
+          - paragraph: We find the creative opportunity hiding in the brief
+        - generic [ref=e130]:
+          - paragraph [ref=e131]: 02 — Develop
+          - paragraph [ref=e132]: We build the idea.
+          - paragraph [ref=e133]: This is where the concept comes to life — scripts, treatments, shot lists, locations, talent. Everything planned so nothing is left to chance on shoot day.
+          - paragraph [ref=e134]: We develop the creative concept and direction
+          - paragraph [ref=e135]: We write the script, treatment, and storyboard
+          - paragraph [ref=e136]: We plan locations, talent, and logistics
+          - paragraph: We present the creative and refine until it's right
+        - generic [ref=e139]:
+          - paragraph [ref=e140]: 03 — Produce
+          - paragraph [ref=e141]: We show up and shoot.
+          - paragraph [ref=e142]: Full in-house crew. Full creative control. We handle everything on set so you don't have to worry about a thing — just watch it come to life.
+          - paragraph [ref=e143]: We execute the shoot with our full in-house team
+          - paragraph [ref=e144]: We direct, frame, and capture with intention
+          - paragraph [ref=e145]: We maintain creative consistency across every shot
+          - paragraph: We manage the set so every minute counts
+        - generic [ref=e148]:
+          - paragraph [ref=e149]: 04 — Refine
+          - paragraph [ref=e150]: We make it great.
+          - paragraph [ref=e151]: Edit. Colour. Sound. Motion. We go through every frame until it feels exactly right. Good enough isn't in our vocabulary.
+          - paragraph [ref=e152]: We edit and shape the narrative
+          - paragraph [ref=e153]: We apply colour grading and motion graphics
+          - paragraph [ref=e154]: We mix and design the sound
+          - paragraph: We review, refine, and incorporate your feedback
+        - generic [ref=e157]:
+          - paragraph [ref=e158]: 05 — Deliver
+          - paragraph [ref=e159]: We send it into the world.
+          - paragraph [ref=e160]: Final assets, optimised for every platform you need. Clean. On time. Ready to make an impact.
+          - paragraph [ref=e161]: We export and optimise for every platform
+          - paragraph [ref=e162]: We deliver with full quality assurance
+          - paragraph [ref=e163]: We analyse content performance and share insights
+          - paragraph: We stay available for whatever comes next
+      - img [ref=e165]
+      - paragraph [ref=e169]: "05"
+  - generic [ref=e171]:
+    - paragraph [ref=e172]: 01 â€” Discover
+    - paragraph [ref=e173]: We get to know you.
+    - paragraph [ref=e174]: We dig into your brand, your audience, and what you actually want to achieve. No assumptions. Just the right questions, asked early.
+    - paragraph [ref=e175]: We sit down and define the brief together
+    - paragraph [ref=e176]: We identify your audience and key message
+    - paragraph [ref=e177]: We align on objectives, timelines, and deliverables
+    - paragraph: We find the creative opportunity hiding in the brief
+  - generic [ref=e180]:
+    - paragraph [ref=e181]: 02 â€” Develop
+    - paragraph [ref=e182]: We build the idea.
+    - paragraph [ref=e183]: This is where the concept comes to life â€” scripts, treatments, shot lists, locations, talent. Everything planned so nothing is left to chance on shoot day.
+    - paragraph [ref=e184]: We develop the creative concept and direction
+    - paragraph [ref=e185]: We write the script, treatment, and storyboard
+    - paragraph [ref=e186]: We plan locations, talent, and logistics
+    - paragraph: We present the creative and refine until it's right
+  - generic [ref=e189]:
+    - paragraph [ref=e190]: 03 â€” Produce
+    - paragraph [ref=e191]: We show up and shoot.
+    - paragraph [ref=e192]: Full in-house crew. Full creative control. We handle everything on set so you don't have to worry about a thing â€” just watch it come to life.
+    - paragraph [ref=e193]: We execute the shoot with our full in-house team
+    - paragraph [ref=e194]: We direct, frame, and capture with intention
+    - paragraph [ref=e195]: We maintain creative consistency across every shot
+    - paragraph: We manage the set so every minute counts
+  - generic [ref=e198]:
+    - paragraph [ref=e199]: 04 â€” Refine
+    - paragraph [ref=e200]: We make it great.
+    - paragraph [ref=e201]: Edit. Colour. Sound. Motion. We go through every frame until it feels exactly right. Good enough isn't in our vocabulary.
+    - paragraph [ref=e202]: We edit and shape the narrative
+    - paragraph [ref=e203]: We apply colour grading and motion graphics
+    - paragraph [ref=e204]: We mix and design the sound
+    - paragraph: We review, refine, and incorporate your feedback
+  - generic [ref=e207]:
+    - paragraph [ref=e208]: 05 â€” Deliver
+    - paragraph [ref=e209]: We send it into the world.
+    - paragraph [ref=e210]: Final assets, optimised for every platform you need. Clean. On time. Ready to make an impact.
+    - paragraph [ref=e211]: We export and optimise for every platform
+    - paragraph [ref=e212]: We deliver with full quality assurance
+    - paragraph [ref=e213]: We analyse content performance and share insights
+    - paragraph: We stay available for whatever comes next
+  - generic [ref=e215]:
+    - generic [ref=e216]:
+      - generic [ref=e217]: AREA OF
+      - generic [ref=e218]: EXPERTISE
+    - generic [ref=e219]:
+      - generic [ref=e220]: Strategy, develop, capture, and craft — from first insight to final delivery.
+      - generic [ref=e221]:
+        - generic [ref=e222]: s
+        - generic [ref=e223]: d
+        - generic [ref=e224]: c
+        - generic [ref=e225]: c
+    - generic:
+      - generic:
+        - generic [ref=e227]:
+          - generic [ref=e228]:
+            - paragraph [ref=e229]: Strategy
+            - generic [ref=e230]: s
+          - list [ref=e231]:
+            - listitem [ref=e232]: .............................. Brand research
+            - listitem [ref=e233]: .............................. Market analysis
+            - listitem [ref=e234]: .............................. Creative direction
+            - listitem [ref=e235]: .............................. Campaign strategy
+            - listitem [ref=e236]: Objective alignment
+          - generic [ref=e237]:
+            - paragraph [ref=e238]: Strategy
+            - generic [ref=e239]: s
+        - generic [ref=e242]:
+          - generic [ref=e243]:
+            - paragraph [ref=e244]: Develop
+            - generic [ref=e245]: d
+          - list [ref=e246]:
+            - listitem [ref=e247]: .............................. Script writing
+            - listitem [ref=e248]: .............................. Visual moodboarding
+            - listitem [ref=e249]: .............................. Shot planning
+            - listitem [ref=e250]: .............................. Talent scouting
+            - listitem [ref=e251]: Production scheduling
+          - generic [ref=e252]:
+            - paragraph [ref=e253]: Develop
+            - generic [ref=e254]: d
+        - generic [ref=e257]:
+          - generic [ref=e258]:
+            - paragraph [ref=e259]: Capture
+            - generic [ref=e260]: c
+          - list [ref=e261]:
+            - listitem [ref=e262]: .............................. Corporate videos
+            - listitem [ref=e263]: .............................. Brand documentaries
+            - listitem [ref=e264]: .............................. Product films
+            - listitem [ref=e265]: .............................. Lifestyle content
+            - listitem [ref=e266]: Photography
+          - generic [ref=e267]:
+            - paragraph [ref=e268]: Capture
+            - generic [ref=e269]: c
+        - generic [ref=e272]:
+          - generic [ref=e273]:
+            - paragraph [ref=e274]: Craft
+            - generic [ref=e275]: c
+          - list [ref=e276]:
+            - listitem [ref=e277]: .............................. Colour grading
+            - listitem [ref=e278]: .............................. Motion graphics
+            - listitem [ref=e279]: .............................. Sound design
+            - listitem [ref=e280]: .............................. Audio mixing
+            - listitem [ref=e281]: Platform delivery
+          - generic [ref=e282]:
+            - paragraph [ref=e283]: Craft
+            - generic [ref=e284]: c
+  - generic [ref=e286]:
+    - link "Let's work together!" [ref=e291] [cursor=pointer]:
+      - /url: mailto:hello@thebricks.lk
+      - text: Let's work
+      - text: together!
+    - generic [ref=e292]:
+      - generic [ref=e295]:
+        - generic [ref=e296]:
+          - link "The Bricks Creative production house hello@thebricks.lk" [ref=e297] [cursor=pointer]:
+            - /url: mailto:hello@thebricks.lk
+            - generic [ref=e298]: The Bricks
+            - generic [ref=e299]: Creative production house
+            - generic [ref=e300]: hello@thebricks.lk
+          - generic [ref=e301]:
+            - link "YouTube" [ref=e302] [cursor=pointer]:
+              - /url: https://www.youtube.com/@TheBrickslk
+              - img [ref=e303]
+              - text: YouTube
+            - link "Instagram" [ref=e305] [cursor=pointer]:
+              - /url: https://www.instagram.com/thebrickslk/
+              - img [ref=e306]
+              - text: Instagram
+            - link "Facebook" [ref=e308] [cursor=pointer]:
+              - /url: https://www.facebook.com/thebrickslk
+              - img [ref=e309]
+              - text: Facebook
+          - generic [ref=e311]:
+            - generic [ref=e312]: General enquiries
+            - link "hello@thebricks.lk" [ref=e313] [cursor=pointer]:
+              - /url: mailto:hello@thebricks.lk
+          - generic [ref=e314]:
+            - generic [ref=e315]: New business
+            - link "hello@thebricks.lk" [ref=e316] [cursor=pointer]:
+              - /url: mailto:hello@thebricks.lk
+        - generic [ref=e317]:
+          - generic [ref=e318]:
+            - generic [ref=e319]: Contact
+            - generic [ref=e320]: us
+          - generic [ref=e323]:
+            - textbox "Your email" [ref=e324]
+            - button "Contact us" [ref=e325] [cursor=pointer]:
+              - img [ref=e326]
+      - generic [ref=e328]:
+        - generic [ref=e329]: Â©2026 The Bricks Creative (Pvt) Ltd
+        - link "Production / The Bricks" [ref=e330] [cursor=pointer]:
+          - /url: https://www.instagram.com/thebrickslk/
+        - generic [ref=e331]: "Built by Nadula with â™¥ï¸\x8f"
+        - generic [ref=e332] [cursor=pointer]:
+          - img [ref=e333]
+          - img [ref=e335]
+    - generic [ref=e338]:
+      - generic [ref=e339]:
+        - text: Keep Scrolling
+        - text: to Learn More
+      - generic [ref=e340]:
+        - generic [ref=e341]: Our Projects
+        - generic [ref=e342]:
+          - generic [ref=e343]: Next Page
+          - img [ref=e347]
+  - generic [ref=e359]:
+    - generic [ref=e360]:
+      - generic [ref=e361]: "0"
+      - generic [ref=e362]: "0"
+    - generic [ref=e363]:
+      - generic [ref=e364]: "0"
+      - generic [ref=e365]: "0"
+    - generic [ref=e366]:
+      - generic [ref=e367]: "0"
+      - generic [ref=e368]: "0"

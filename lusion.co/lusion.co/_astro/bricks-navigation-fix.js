@@ -47,19 +47,28 @@
       path.indexOf("/projects/") !== -1 &&
       path !== "/projects" &&
       path !== "/projects/";
+    var onAboutPage = path === "/about" || path === "/about/";
 
-    if (!onProjectDetail) return;
-    if (!document.getElementById("project-details-title")) return;
+    if (!onProjectDetail && !onAboutPage) return;
+    if (onProjectDetail && !document.getElementById("project-details-title")) return;
+    if (onAboutPage && !document.getElementById("about")) return;
 
     preloader.style.display = "none";
     preloader.style.pointerEvents = "none";
     preloader.style.opacity = "0";
+    preloader.style.visibility = "hidden";
 
     var overlay = document.getElementById("transition-overlay");
     if (overlay) {
+      overlay.style.display = "none";
       overlay.style.opacity = "0";
+      overlay.style.visibility = "hidden";
       overlay.style.pointerEvents = "none";
     }
+
+    document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
+    document.documentElement.classList.add("is-ready");
   }
 
   function normalizeProjectCardTitles() {
@@ -117,10 +126,18 @@
 
   function scheduleLoaderDismiss() {
     scheduleProjectTitleNormalization();
-    [2000, 4000, 8000].forEach(function (ms) {
+    [250, 1000, 2500, 5000, 8000].forEach(function (ms) {
       window.setTimeout(dismissStuckLoader, ms);
     });
   }
+
+  window.addEventListener(
+    "error",
+    function () {
+      window.setTimeout(dismissStuckLoader, 50);
+    },
+    true
+  );
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", scheduleLoaderDismiss);
